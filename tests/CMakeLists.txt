@@ -1,0 +1,14 @@
+﻿# CMakeList.txt: CMake-Projektdatei der obersten Ebene. Führen Sie hier die globale Konfiguration aus,
+# und schließen Sie Unterprojekte ein.
+#
+cmake_minimum_required (VERSION 3.8)
+
+project ("SDL_Test")
+
+set (CMAKE_CXX_STANDARD 17)
+
+# cp img.png to build directory
+file(COPY img.png DESTINATION ${CMAKE_BINARY_DIR})
+
+# Schließen Sie Unterprojekte ein.
+add_subdirectory ("SDL_Test")
