@@ -7,7 +7,6 @@ project ("SDL_Test")
 
 set (CMAKE_CXX_STANDARD 17)
 
-# cp img.png to build directory
 file(COPY img.png DESTINATION ${CMAKE_BINARY_DIR})
 
 # Schließen Sie Unterprojekte ein.
