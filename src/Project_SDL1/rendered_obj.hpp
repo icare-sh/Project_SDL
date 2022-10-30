@@ -38,20 +38,14 @@ SDL_Surface* load_surface(const char* path);
 SDL_Texture* create_texture(SDL_Surface* surface, SDL_Renderer* renderer);
 
 /*
+* Load an image
+* Description: Load an image with the given parameters
+*/
+SDL_Texture* load_image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Surface* surface, const char* path);
+
+/*
 * Close the window
 * Description: Close the window with the given parameters
 */
 void SDL_Close(SDL_Window* window);
 
-/*
-* Initialize SDL
-* Description: Initialize SDL with the given parameters and begin the game
-*/
-int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *surface);
-
-/*
-* Create X Sheeps from Interaction class and render them
-* Description: Create X Sheeps from Interaction class and render them
-* return: a vector of sheeps
-*/
-properties * render_copy(SDL_Renderer* renderer, SDL_Texture* texture, Interaction interaction);

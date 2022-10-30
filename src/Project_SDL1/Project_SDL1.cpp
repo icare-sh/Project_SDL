@@ -1,37 +1,66 @@
-﻿// SDL_Test.cpp: Definiert den Einstiegspunkt für die Anwendung.
-//
+﻿#include <random>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <iostream>
+#include <memory>
 
-#include "Project_SDL1.h"
+#include "Project_SDL1.hpp"
 
-#include <algorithm>
-#include <cassert>
-#include <cstdlib>
-#include <numeric>
-#include <random>
-#include <string>
+int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *surface)
+{
+    SDL_bool shouldStop = SDL_FALSE; // Bool For loop condition
 
-void init() {
-  // Initialize SDL
-  if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO) < 0)
-    throw std::runtime_error("init():" + std::string(SDL_GetError()));
+    // Call the interaction class
+    Interaction interaction; 
+    interaction = interaction.interact();
+    properties * prop;
 
-  // Initialize PNG loading
-  int imgFlags = IMG_INIT_PNG;
-  if (!(IMG_Init(imgFlags) & imgFlags))
-    throw std::runtime_error("init(): SDL_image could not initialize! "
-                             "SDL_image Error: " +
-                             std::string(IMG_GetError()));
+    // Get the number of sheeps and wolves
+    auto nb_sheep = interaction.get_nb_sheep() ;
+    auto nb_wolves = interaction.get_nb_wolves();
+
+    srand (time (NULL)); // Initialize random seed
+
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+        return 1; // return 1 if SDL could not initialize
+    }
+    else
+    {
+        // Create window
+        window = create_window("SDL2 Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, true);
+        renderer = create_renderer(window);
+
+        // Load image
+        texture = load_image(renderer, texture, surface, "media/sheep.bmp");
+        
+        SDL_RenderClear(renderer);
+        prop = render_copy(renderer, texture, nb_sheep);
+        SDL_RenderPresent(renderer);
+
+        // Let the window open infinitely
+        while (!shouldStop)
+        {
+            SDL_Event event;
+            prop = present_image_and_clear(renderer, texture, prop, nb_sheep); // Present the image and clear the old one
+            while (SDL_PollEvent(&event))
+            {
+                
+                
+                if (event.type == SDL_QUIT)
+                {
+                    shouldStop = SDL_TRUE;
+                }
+            }            
+        }
+
+        // Destroy window and renderer and the texture
+        SDL_DestroyTexture(texture);
+        SDL_DestroyRenderer(renderer);
+        SDL_Close(window);
+        delete[] prop;
+
+        return 0; // return 0 if SDL could initialize
+    }
 }
-
-namespace {
-// Defining a namespace without a name -> Anonymous workspace
-// Its purpose is to indicate to the compiler that everything
-// inside of it is UNIQUELY used within this source file.
-
-SDL_Surface* load_surface_for(const std::string& path,
-                              SDL_Surface* window_surface_ptr) {
-
-  // Helper function to load a png for a specific surface
-  // See SDL_ConvertSurface
-}
-} // namespace

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string>
+#include <SDL.h>
 
-#include "SDL.h"
-#include "rendered_obj.hpp"
+#include "Project_SDL1.hpp"
 
 int main(int argc, char* argv[])
 {  
