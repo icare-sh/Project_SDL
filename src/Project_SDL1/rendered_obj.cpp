@@ -1,6 +1,11 @@
 #include <iostream>
 #include <SDL.h>
 #include "rendered_obj.hpp"
+#include <stdlib.h>
+#include <time.h>
+
+#define SHAPE_SIZE 100
+
 
 rendered_obj::rendered_obj(const SDL_Renderer *renderer)
 {
@@ -13,7 +18,7 @@ SDL_Window* create_window(const char* title, int xpos, int ypos, int width, int 
     Uint32 flags = 0;
     if (fullscreen)
     {
-        flags = SDL_WINDOW_FULLSCREEN;
+        flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
     }
     auto window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
     if (window == NULL)
@@ -61,6 +66,12 @@ void SDL_Close(SDL_Window* window)
 int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *surface)
 {
     SDL_bool shouldStop = SDL_FALSE;
+
+    SDL_Rect SrcR = {0, 0, SHAPE_SIZE, SHAPE_SIZE};
+    // random position in DestR
+    srand (time (NULL));
+    SDL_Rect DestR = { (rand()%1920) / 2 - SHAPE_SIZE / 2 , (rand()%1080) / 2 - SHAPE_SIZE / 2 , SHAPE_SIZE, SHAPE_SIZE};
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
@@ -68,8 +79,9 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
     }
     else
     {
-        window = create_window("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
+        window = create_window("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, true);
         renderer = create_renderer(window);
+
         surface = load_surface("sheep.bmp");
         texture = create_texture(surface, renderer);
         SDL_FreeSurface(surface);
@@ -84,7 +96,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
                 }
             }
             SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, texture, NULL, NULL);
+            SDL_RenderCopy(renderer, texture, &SrcR, &DestR);
             SDL_RenderPresent(renderer);
         }
         SDL_DestroyTexture(texture);

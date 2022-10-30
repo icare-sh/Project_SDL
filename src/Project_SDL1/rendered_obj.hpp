@@ -1,5 +1,9 @@
 #include <SDL.h>
 #include <iostream>
+#define SHAPE_SIZE 100
+
+
+
 
 
 // class rendered_obj herite de la classe interaction
