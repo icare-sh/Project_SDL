@@ -1,9 +1,9 @@
 class Interaction
 {
     public:
-        Interaction() = default;
-        ~Interaction() = default;
-        virtual Interaction interact() const;  // virtual method;
+        Interaction() = default; // default constructor
+        ~Interaction() = default; // default destructor
+        virtual Interaction interact() const;  // virtual function memeber
 
         // getter and setter
         void set_nb_sheep(int x);
