@@ -1,19 +1,5 @@
 #include <iostream>
-#include "interaction.hpp"
-
-
-Interaction::Interaction()
-{
-    // create constructor
-    nb_sheep = 10;
-    nb_wolves = 3;
-}
-
-Interaction::~Interaction()
-{
-    // create destructor
-    
-}
+#include "Interaction.hpp"
 
 // getter and setter
 void Interaction::set_nb_sheep(int x)

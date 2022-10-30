@@ -1,17 +1,19 @@
 #include <iostream>
 #include <SDL.h>
-#include "rendered_obj.hpp"
 #include <stdlib.h>
 #include <time.h>
 
+#include "rendered_obj.hpp"
+
 #define SHAPE_SIZE 100
 
-
-rendered_obj::rendered_obj(const SDL_Renderer *renderer)
+Interaction Interaction::interact() const
 {
-    renderer = NULL;
+    Interaction new_interaction;
+    new_interaction.set_nb_sheep(10);
+    new_interaction.set_nb_wolves(3);
+    return new_interaction;
 }
-
 
 SDL_Window* create_window(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
@@ -63,14 +65,29 @@ void SDL_Close(SDL_Window* window)
     SDL_DestroyWindow(window);
 }
 
+//render copy with loop
+Interaction render_copy(SDL_Renderer* renderer, SDL_Texture* texture, Interaction interaction)
+{
+    for (int i = 0; i < interaction.get_nb_sheep(); i++)
+    {
+        SDL_Rect SrcR = {0, 0, SHAPE_SIZE, SHAPE_SIZE};
+        SDL_Rect DestR = { (rand()%1920) / 2 - SHAPE_SIZE / 2 , (rand()%1080) / 2 - SHAPE_SIZE / 2 , SHAPE_SIZE, SHAPE_SIZE};
+        SDL_RenderCopy(renderer, texture, &SrcR, &DestR);
+    }
+    
+    return interaction;
+}
+
 int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *surface)
 {
     SDL_bool shouldStop = SDL_FALSE;
+    Interaction interaction; 
+    interaction = interaction.interact();
 
-    SDL_Rect SrcR = {0, 0, SHAPE_SIZE, SHAPE_SIZE};
-    // random position in DestR
+    auto nb_sheep = interaction.get_nb_sheep() ;
+    auto nb_wolves = interaction.get_nb_wolves();
+
     srand (time (NULL));
-    SDL_Rect DestR = { (rand()%1920) / 2 - SHAPE_SIZE / 2 , (rand()%1080) / 2 - SHAPE_SIZE / 2 , SHAPE_SIZE, SHAPE_SIZE};
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -82,9 +99,12 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
         window = create_window("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, true);
         renderer = create_renderer(window);
 
-        surface = load_surface("sheep.bmp");
+        surface = load_surface("media/sheep.bmp");
         texture = create_texture(surface, renderer);
         SDL_FreeSurface(surface);
+        SDL_RenderClear(renderer);
+            interaction = render_copy(renderer, texture, interaction);
+            SDL_RenderPresent(renderer);
         while (!shouldStop)
         {
             SDL_Event event;
@@ -95,9 +115,8 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
                     shouldStop = SDL_TRUE;
                 }
             }
-            SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, texture, &SrcR, &DestR);
-            SDL_RenderPresent(renderer);
+            
+            
         }
         SDL_DestroyTexture(texture);
         SDL_DestroyRenderer(renderer);
