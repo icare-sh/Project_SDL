@@ -1,49 +1,20 @@
-#include "SDL.h"
 #include <stdio.h>
 #include <string>
 
+#include "SDL.h"
+#include "rendered_obj.hpp"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{  
+    SDL_Window *window = NULL; // Declare a window
+    SDL_Renderer *renderer = NULL; // Declare a renderer
+    SDL_Texture *texture = NULL; // Declare a texture
+    SDL_Surface *surface = NULL; // Declare a surface
 
-    //Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL could not initialize! SDL_Error\n");
-    }
-
-    // create a window and a surface
-    SDL_Window* window = SDL_CreateWindow("SDL2Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
-    SDL_Surface* window_surface = SDL_GetWindowSurface(window);
-
-    // load a png image
-    SDL_Surface* image_surface = SDL_LoadBMP("sheep.bmp");
-    if (image_surface == NULL) {
-        printf("SDL_LoadBMP Error: \n");
-        return 1;
-    }
-
-    // blit the image to the window
-    SDL_BlitSurface(image_surface, NULL, window_surface, NULL);
-
-    // update the window
-    SDL_UpdateWindowSurface(window);
-
-    // wait 5 seconds
-    SDL_Delay(5000);
-
-
-    // free the image surface
-    SDL_FreeSurface(image_surface);
-
-    // update the window
-    SDL_UpdateWindowSurface(window);
-
-  
-
-    // wait 5 seconds
-    SDL_Delay(5000);
-
-    // quit SDL
-    SDL_Quit();
+    // Initialize SDL, create a window and set the renderer
+    init(window, renderer, texture, surface);
+    
+    SDL_Quit(); // Quit SDL
     
     return 0;
 }
