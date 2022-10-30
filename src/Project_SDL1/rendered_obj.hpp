@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <iostream>
+#include <vector>
 #include "Interaction.hpp"
 
 
@@ -8,6 +9,7 @@ class rendered_obj: public Interaction {
         rendered_obj() = default;
         ~rendered_obj() = default;
         Interaction interact() const override;
+        
 
 };
 
@@ -50,5 +52,6 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
 /*
 * Create X Sheeps from Interaction class and render them
 * Description: Create X Sheeps from Interaction class and render them
+* return: a vector of sheeps
 */
-Interaction render_copy(SDL_Renderer* renderer, SDL_Texture* texture, Interaction interaction);
+properties * render_copy(SDL_Renderer* renderer, SDL_Texture* texture, Interaction interaction);
