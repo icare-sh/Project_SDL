@@ -29,20 +29,22 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
     else
     {
         // Create window
-        window = create_window("SDL2 Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, true);
+        window = create_window("SDL2 Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, false);
         renderer = create_renderer(window);
 
         
         // insert background image
 
-        SDL_Surface* image = SDL_LoadBMP("media/background.bmp");
-        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
+        SDL_Surface* load_backgroud = SDL_LoadBMP("media/background.bmp");
+        SDL_Texture* background = SDL_CreateTextureFromSurface(renderer, load_backgroud);
+        SDL_FreeSurface(load_backgroud);
+        
+        // background loading
         
 
 
-
         // Load image
-        texture = load_image(renderer, texture, surface, "media/sheep.bmp");
+        texture = load_image(renderer, texture, surface, "media/sheep1.bmp");
         
         SDL_RenderClear(renderer);
         prop = render_copy(renderer, texture, nb_sheep);
@@ -52,7 +54,10 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
         while (!shouldStop)
         {
             SDL_Event event;
+            SDL_RenderCopy(renderer, background, NULL, NULL);
+            
             prop = present_image_and_clear(renderer, texture, prop, nb_sheep); // Present the image and clear the old one
+            SDL_RenderPresent(renderer);
             while (SDL_PollEvent(&event))
             {
                 

@@ -11,7 +11,7 @@
 Interaction Interaction::interact() const
 {
     Interaction new_interaction;
-    new_interaction.set_nb_sheep(100);
+    new_interaction.set_nb_sheep(5);
     new_interaction.set_nb_wolves(3);
     return new_interaction; // return a new interaction object
 }
