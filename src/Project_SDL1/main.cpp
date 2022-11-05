@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     else
     {
         //create window
-        window = app.create_window("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
+        window = app.create_window("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, true);
         renderer = app.create_renderer(window);
         init(window, renderer, texture, surface);
     }

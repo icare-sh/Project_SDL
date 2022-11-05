@@ -26,25 +26,27 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     // insert sheep image
     texture[1] = display.load_image(renderer, texture[1], surface, "media/sheep1.bmp");
     prop = render_copy(renderer, texture[1], nb_sheep);
+    
     while (!shouldStop)
-        {
-            SDL_Event event;
+    {
+        SDL_Event event;
 
-            // Reload the background
-            texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
-            SDL_RenderCopy(renderer, texture[0], NULL, NULL);
-            
-            // Move the sheeps
-            prop = present_image_and_clear(renderer, texture[1], prop, nb_sheep); // Present the image and clear the old one
-            SDL_RenderPresent(renderer);
-            while (SDL_PollEvent(&event))
+        // Reload the background
+        texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
+        SDL_RenderCopy(renderer, texture[0], NULL, NULL);
+        
+        // Move the sheeps
+        prop = present_image_and_clear(renderer, texture[1], prop, nb_sheep); // Present the image and clear the old one
+        SDL_RenderPresent(renderer);
+
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
             {
-                if (event.type == SDL_QUIT)
-                {
-                    shouldStop = SDL_TRUE;
-                }
-            }            
+                shouldStop = SDL_TRUE;
+            }
         }
+    }
     delete[] prop;
     return 0;
 }

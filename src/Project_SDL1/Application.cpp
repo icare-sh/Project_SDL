@@ -12,7 +12,7 @@ SDL_Window* Application::create_window(const char* title, int xpos, int ypos, in
     SDL_Window* window = nullptr;
     if (fullscreen)
     {
-        window = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_FULLSCREEN);
+        window = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_FULLSCREEN_DESKTOP);
     }
     else
     {
