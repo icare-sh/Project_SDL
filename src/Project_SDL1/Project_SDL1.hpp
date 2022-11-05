@@ -14,6 +14,6 @@ class Project_SDL1 : public move
 * Init game
 * Description: Init game with the given parameters
 */
-int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *surface);
+int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface);
 
 #endif // PROJECT_SDL1_HPP

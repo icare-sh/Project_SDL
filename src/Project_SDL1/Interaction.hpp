@@ -24,6 +24,6 @@ class Interaction
 
 
     private:
-        int nb_sheep;
-        int nb_wolves;
+        int nb_sheep = 4;
+        int nb_wolves = 3;
 };
