@@ -11,9 +11,9 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
     SDL_bool shouldStop = SDL_FALSE; // Bool For loop condition
 
     // Call the interaction class
-    Interaction interaction; 
+    Interaction interaction;
     interaction = interaction.interact();
-    properties * prop;
+    properties * prop; 
 
     // Get the number of sheeps and wolves
     auto nb_sheep = interaction.get_nb_sheep() ;
