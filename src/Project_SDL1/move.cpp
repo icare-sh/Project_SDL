@@ -3,7 +3,7 @@
 
 #include "move.hpp"
 
-#define SHAPE_SIZE 80
+#define SHAPE_SIZE 70
 
 
 properties * render_copy(SDL_Renderer* renderer, SDL_Texture* texture, int size)
@@ -44,8 +44,8 @@ properties * render_copy_maj_pos(SDL_Renderer* renderer, SDL_Texture* texture, p
 
 properties * present_image_and_clear(SDL_Renderer* renderer, SDL_Texture* texture, properties *prop, int size)
 {
-    SDL_RenderClear(renderer);
+
+    //SDL_RenderClear(renderer);
     prop = render_copy_maj_pos(renderer, texture, prop, size);
-    SDL_RenderPresent(renderer);
     return prop;
 }
