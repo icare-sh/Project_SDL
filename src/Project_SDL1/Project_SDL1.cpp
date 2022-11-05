@@ -32,6 +32,15 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
         window = create_window("SDL2 Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, true);
         renderer = create_renderer(window);
 
+        
+        // insert background image
+
+        SDL_Surface* image = SDL_LoadBMP("media/background.bmp");
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
+        
+
+
+
         // Load image
         texture = load_image(renderer, texture, surface, "media/sheep.bmp");
         
@@ -57,6 +66,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_S
 
         // Destroy window and renderer and the texture
         SDL_DestroyTexture(texture);
+        SDL_FreeSurface(surface);
         SDL_DestroyRenderer(renderer);
         SDL_Close(window);
         delete[] prop;
