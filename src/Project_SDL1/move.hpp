@@ -1,6 +1,7 @@
-#include "rendered_obj.hpp"
+#include "Display.hpp"
+#include "Interaction.hpp"
 
-class move: public rendered_obj {
+class move: public Display {
     public:
         move() = default;
         ~move() = default;
