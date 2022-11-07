@@ -8,7 +8,7 @@
 
 int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface) 
 {
-    properties * prop;
+    properties *prop = NULL;
     srand (time (NULL));
     SDL_bool shouldStop = SDL_FALSE; // Bool For loop condition;
 
@@ -19,33 +19,27 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     auto nb_sheep = 5;
     auto nb_wolves = 4;
 
-    // Load the background image
-    texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
-    SDL_RenderCopy(renderer, texture[0], NULL, NULL);
-
     // insert sheep image
     texture[1] = display.load_image(renderer, texture[1], surface, "media/sheep1.bmp");
+    
     prop = render_copy(renderer, texture[1], nb_sheep);
     
-    while (!shouldStop)
+    //load background imahe and sheep infini loop
+    texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
+    
+    while (!shouldStop) 
     {
         SDL_Event event;
-
-        // Reload the background
-        texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
-        SDL_RenderCopy(renderer, texture[0], NULL, NULL);
-        
-        // Move the sheeps
-        prop = present_image_and_clear(renderer, texture[1], prop, nb_sheep); // Present the image and clear the old one
-        SDL_RenderPresent(renderer);
-
-        while (SDL_PollEvent(&event))
+        while (SDL_PollEvent(&event)) 
         {
-            if (event.type == SDL_QUIT)
+            if (event.type == SDL_QUIT) 
             {
                 shouldStop = SDL_TRUE;
             }
         }
+        SDL_RenderCopy(renderer, texture[0], NULL, NULL);
+        prop = render_copy_maj_pos(renderer, texture[1], prop, nb_sheep);
+        SDL_RenderPresent(renderer);
     }
     delete[] prop;
     return 0;

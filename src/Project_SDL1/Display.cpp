@@ -35,6 +35,6 @@ SDL_Texture* Display::load_image(SDL_Renderer* renderer, SDL_Texture* texture, S
 {
     surface = load_surface(path);
     texture = create_texture(surface, renderer);
-    
+    SDL_FreeSurface(surface);
     return texture;
 }
