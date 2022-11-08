@@ -6,30 +6,71 @@
 
 #include "Project_SDL1.hpp"
 
+// Create a NB_SHEEP of sheep
+Mouton * create_sheeps()
+{
+    Mouton * sheeps = new Mouton[NB_SHEEP];
+    return sheeps;
+
+}
+
+//Initiate one class Animal
+void render_copy(SDL_Renderer *renderer, SDL_Texture *texture, Animal * animals,int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        //Size of the texture
+        SDL_Rect SrcR = {0, 0, animals[i].get_shape_size(), animals[i].get_shape_size()};
+        //Position of the texture
+        SDL_Rect DestR = { animals[i].get_x() , animals[i].get_y()  , animals[i].get_shape_size(), animals[i].get_shape_size()};
+        //Copy the texture to the renderer
+        SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
+    }
+}
+
+//Maj position of one class Animal
+void render_copy_maj_pos(SDL_Renderer *renderer, SDL_Texture *texture, Animal * animals,int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        animals[i].maj_position();
+        SDL_Rect SrcR = {0, 0, animals[i].get_shape_size(), animals[i].get_shape_size()};
+        SDL_Rect DestR = { animals[i].get_x() , animals[i].get_y()  , animals[i].get_shape_size(), animals[i].get_shape_size()};
+        SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
+    }
+}
+
+
+//INIT GAME
 int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface) 
 {
-    properties *prop = NULL;
+    //reset random
     srand (time (NULL));
+
+    //Condition to quit the game
     SDL_bool shouldStop = SDL_FALSE; // Bool For loop condition;
 
     //Call display class
     Display display;
     
-    // Get the number of sheeps and wolves
-    auto nb_sheep = 5;
-    auto nb_wolves = 4;
-
-    // insert sheep image
+    
+    // ----Create sheep----
+    //Load image with path of img
     texture[1] = display.load_image(renderer, texture[1], surface, "media/sheep1.bmp");
-    
-    prop = render_copy(renderer, texture[1], nb_sheep);
-    
-    //load background imahe and sheep infini loop
+    //Create NB_SHEPP of sheeps & init position
+    Mouton * sheeps = create_sheeps();
+    //Display sheeps on screen
+    render_copy(renderer, texture[1], sheeps, NB_SHEEP);
+
+    //load background image
     texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
     
+    //infinte loop of the game
     while (!shouldStop) 
     {
+        //Event with mouse
         SDL_Event event;
+
         while (SDL_PollEvent(&event)) 
         {
             if (event.type == SDL_QUIT) 
@@ -37,89 +78,18 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
                 shouldStop = SDL_TRUE;
             }
         }
+        //Display background
         SDL_RenderCopy(renderer, texture[0], NULL, NULL);
-        prop = render_copy_maj_pos(renderer, texture[1], prop, nb_sheep);
+        //Display sheeps
+        render_copy_maj_pos(renderer, texture[1], sheeps, NB_SHEEP);
+        //Update screen
         SDL_RenderPresent(renderer);
+        //FPS
+        SDL_Delay(10);
     }
-    delete[] prop;
+    delete[] sheeps;
     return 0;
 }
 
 
 
-
-
-/*int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *surface)
-{
-    SDL_bool shouldStop = SDL_FALSE; // Bool For loop condition
-
-    // Call the interaction class
-    Interaction interaction; 
-    interaction = interaction.interact();
-    properties * prop;
-
-    // Get the number of sheeps and wolves
-    auto nb_sheep = interaction.get_nb_sheep() ;
-    auto nb_wolves = interaction.get_nb_wolves();
-
-     // Initialize random seed
-
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
-        return 1; // return 1 if SDL could not initialize
-    }
-    else
-    {
-        // Create window
-        window = create_window("SDL2 Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, false);
-        renderer = create_renderer(window);
-
-        
-        // insert background image
-
-        SDL_Surface* load_backgroud = SDL_LoadBMP("media/background.bmp");
-        SDL_Texture* background = SDL_CreateTextureFromSurface(renderer, load_backgroud);
-        SDL_FreeSurface(load_backgroud);
-        
-        // background loading
-        
-
-
-        // Load image
-        texture = load_image(renderer, texture, surface, "media/sheep1.bmp");
-        
-        SDL_RenderClear(renderer);
-        prop = render_copy(renderer, texture, nb_sheep);
-        SDL_RenderPresent(renderer);
-
-        // Let the window open infinitely
-        while (!shouldStop)
-        {
-            SDL_Event event;
-            SDL_RenderCopy(renderer, background, NULL, NULL);
-            
-            prop = present_image_and_clear(renderer, texture, prop, nb_sheep); // Present the image and clear the old one
-            SDL_RenderPresent(renderer);
-            while (SDL_PollEvent(&event))
-            {
-                
-                
-                if (event.type == SDL_QUIT)
-                {
-                    shouldStop = SDL_TRUE;
-                }
-            }            
-        }
-
-        // Destroy window and renderer and the texture
-        SDL_DestroyTexture(texture);
-        SDL_FreeSurface(surface);
-        SDL_DestroyRenderer(renderer);
-        SDL_Close(window);
-        delete[] prop;
-
-        return 0; // return 0 if SDL could initialize
-    }
-}
-*/

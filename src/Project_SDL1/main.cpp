@@ -4,6 +4,9 @@
 
 #include "Project_SDL1.hpp"
 
+
+
+
 int main(int argc, char* argv[])
 {  
     SDL_Window *window = NULL; // Declare a window

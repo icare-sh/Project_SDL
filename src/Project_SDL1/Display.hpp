@@ -1,4 +1,8 @@
 #include "Application.hpp"
+#define TAILLE_MAX_X 1613
+#define TAILLE_MAX_Y 868    
+#define TAILLE_MIN_X 230
+#define TAILLE_MIN_Y 180
 
 class Display : public Application {
     public:
