@@ -1,3 +1,6 @@
+#ifndef ANIMAL_HPP
+#define ANIMAL_HPP
+
 #include <iostream>
 #include <math.h>
 #include "Display.hpp"
@@ -20,7 +23,7 @@ class Animal : public Display{
         void set_alive(bool alive);
         void set_shape_size(int shape_size);
         int get_shape_size() const;
-        virtual void maj_position() = 0;
+        virtual void maj_position(Animal * animals,Animal * other, int size_animals, int size_other ) = 0;
     private:
         int x;
         int y;
@@ -31,3 +34,5 @@ class Animal : public Display{
         int shape_size;
        
 };
+
+#endif // ANIMAL_HPP

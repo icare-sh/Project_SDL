@@ -1,9 +1,16 @@
+#ifndef DISPLAY_HPP
+#define DISPLAY_HPP
+
 #include "Application.hpp"
 #define TAILLE_MAX_X 1613
 #define TAILLE_MAX_Y 868    
 #define TAILLE_MIN_X 230
 #define TAILLE_MIN_Y 180
-
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
+#define AURA_KILL 35
+#define SPEED_SHEEP 2
+#define AURA_MOUTON 150 
 class Display : public Application {
     public:
         Display() = default;
@@ -35,3 +42,5 @@ class Display : public Application {
         SDL_Texture* texture;
         SDL_Surface* surface;
 };
+
+#endif // DISPLAY_HPP
