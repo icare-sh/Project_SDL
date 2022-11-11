@@ -36,11 +36,10 @@ Animal * Mouton::nearest_wolf(Animal * wolfs, int size)
 
 int Mouton::speed_up(Animal * wolf)
 {
-    printf("distance : %f\n", sqrt(pow(wolf[0].get_x()- get_x(), 2) + pow(wolf[0].get_y() - get_y(), 2)));
     if(sqrt(pow(wolf[0].get_x()- get_x(), 2) + pow(wolf[0].get_y() - get_y(), 2)) < AURA_MOUTON)
     {
 
-        set_speed(SPEED_SHEEP*3);
+        set_speed(SPEED_SHEEP*4);
         set_direction_x(wolf[0].get_direction_x());
         set_direction_y(wolf[0].get_direction_y());
         return 1;

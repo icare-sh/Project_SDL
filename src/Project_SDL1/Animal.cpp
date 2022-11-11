@@ -69,3 +69,13 @@ int Animal::get_shape_size() const
 {
     return shape_size;
 }
+
+void Animal::set_angle(float angle)
+{
+    this->angle = angle;
+}
+
+float Animal::get_angle() const
+{
+    return angle;
+}
