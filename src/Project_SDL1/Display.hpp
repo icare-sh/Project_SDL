@@ -12,7 +12,7 @@
 #define SPEED_SHEEP 2
 #define SPEED_WOLF 2
 #define AURA_MOUTON 150 
-#define AURA_WOLF 400
+#define AURA_WOLF 300
 #define ORBIT_SPEED 0.005f
 #define ORBIT_RADIUS 170.0f
 

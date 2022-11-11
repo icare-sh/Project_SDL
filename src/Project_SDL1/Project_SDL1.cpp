@@ -128,7 +128,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     //other definition
     int size_other = NB_SHEEP;
     Mouton * other = new Mouton[size_other];
-
+    Interaction interaction;
     //reset random
     srand (time (NULL));
 
@@ -166,7 +166,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     render_copy(renderer, texture[1], sheeps, NB_SHEEP);
 
     //Display wolves on screen
-    render_copy(renderer, texture[2], wolves, NB_WOLF);
+    render_copy(renderer, texture[2], wolves, interaction.get_nb_wolves());
 
     //Display shepherd on screen
     render_copy_shepherd(renderer, texture[3], shepherd);
@@ -179,6 +179,8 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
     
     //infinte loop of the game
+    //timer of the game
+    int timer = 0;
 
     while (!shouldStop) 
     {
@@ -224,8 +226,16 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, NB_SHEEP, NB_WOLF);
    
         //Display wolves
-        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, NB_SHEEP, NB_SHEPHERD_DOG, NB_WOLF);
+        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, NB_SHEEP, NB_SHEPHERD_DOG, interaction.get_nb_wolves());
+        
+        if (interaction.get_nb_wolves() < NB_WOLF && timer == 1000)
+        {
+            wolves[interaction.get_nb_wolves()].~Wolf();
+            interaction.set_nb_wolves(interaction.get_nb_wolves() + 1);
+            timer = 0;
+        }
 
+        timer++;
         //Display shepherd
         render_copy_shepherd(renderer, texture[3], shepherd);
 

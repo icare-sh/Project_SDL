@@ -40,19 +40,27 @@ void Wolf::maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, 
     Animal * nearest_dogs = are_shepherd_dogs_near(shepherd_dogs, size_shepherd_dogs);
     if(speed_up(nearest_dogs))
     {
-        return;
+
+        float temp_taux = 0.1;
+        set_direction_x(nearest_dogs->get_x() + get_x());
+        set_direction_y(nearest_dogs->get_y() + get_y());
+
+        temp_taux = sqrt(pow(get_direction_x(), 2) + pow(get_direction_y(), 2));
+
+        set_x(get_x() + get_direction_x() * get_speed()/temp_taux);
+        set_y(get_y() + get_direction_y() * get_speed()/temp_taux);
     }
-        if(!kill_sheep(nearest))
-        {
-            float temp_taux = 0.1;
-            set_direction_x(nearest->get_x() - get_x());
-            set_direction_y(nearest->get_y() - get_y());
+    else if(!kill_sheep(nearest))
+    {
+        float temp_taux = 0.1;
+        set_direction_x(nearest->get_x() - get_x());
+        set_direction_y(nearest->get_y() - get_y());
 
-            temp_taux = sqrt(pow(get_direction_x(), 2) + pow(get_direction_y(), 2));
+        temp_taux = sqrt(pow(get_direction_x(), 2) + pow(get_direction_y(), 2));
 
-            set_x(get_x() + get_direction_x() * get_speed()/temp_taux);
-            set_y(get_y() + get_direction_y() * get_speed()/temp_taux);
-        }
+        set_x(get_x() + get_direction_x() * get_speed()/temp_taux);
+        set_y(get_y() + get_direction_y() * get_speed()/temp_taux);
+    }
 }
 
 int Wolf::kill_sheep(Animal * sheep)
@@ -92,9 +100,7 @@ int Wolf::speed_up(Animal * shepherd_dog)
     if(sqrt(pow(shepherd_dog[0].get_x()- get_x(), 2) + pow(shepherd_dog[0].get_y() - get_y(), 2)) < AURA_WOLF)
     {
 
-        set_speed(SPEED_WOLF*3);
-        set_direction_x(shepherd_dog[0].get_x() + 100);
-        set_direction_y(shepherd_dog[0].get_y() + 100);
+        set_speed(SPEED_WOLF*2);
         return 1;
     }
     else
