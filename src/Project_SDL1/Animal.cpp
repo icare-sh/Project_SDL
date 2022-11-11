@@ -79,3 +79,33 @@ float Animal::get_angle() const
 {
     return angle;
 }
+
+void Animal::set_gender(Gender g)
+{
+    this->g = g;
+}
+
+Gender Animal::get_gender() const
+{
+    return g;
+}
+
+void Animal::set_timer(int timer)
+{
+    this->timer = timer;
+}
+
+int Animal::get_timer() const
+{
+    return timer;
+}
+
+void Animal::set_time(bool time)
+{
+    this->time = time;
+}
+
+bool Animal::get_time() const
+{
+    return time;
+}

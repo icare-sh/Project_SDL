@@ -8,8 +8,20 @@ Mouton::Mouton()
     set_direction_x(rand() % 1000);
     set_direction_y(rand() % 1000);
     set_alive(true);
-    set_shape_size(60);
     
+    int i = rand() % 2;
+    if (i == 0)
+    {
+        set_gender(MALE);
+        set_shape_size(60);
+    }
+    else
+    {
+        set_gender(FEMALE);
+        set_shape_size(80);
+    }
+    set_timer(1000);
+    set_time(false);
 }
 
 Animal * Mouton::nearest_wolf(Animal * wolfs, int size)
@@ -54,9 +66,10 @@ int Mouton::speed_up(Animal * wolf)
 void Mouton::maj_position(Animal * wolves,Animal * other,int size, int size_other)
 {
 
-    (void)other;
+    (void) other;
     float temp_taux = 0.1;
     Animal * nearest = nearest_wolf(wolves, size);
+
     speed_up(nearest);
 
     if (get_x()  < TAILLE_MIN_X )
@@ -83,4 +96,72 @@ void Mouton::maj_position(Animal * wolves,Animal * other,int size, int size_othe
     set_x(get_x() + get_speed() * get_direction_x() / temp_taux);
     set_y(get_y() + get_speed() * get_direction_y() / temp_taux);
 
+}
+
+
+void procreate(Animal * moutons, Interaction interaction)
+{
+    for (int i = 0 ; i < interaction.get_nb_sheep(); i++)
+    {
+        if (moutons[i].get_alive())
+        {
+            for (int j = 0; j < interaction.get_nb_sheep(); i++)
+            {
+                if(moutons[j].get_alive() && i != j)
+                {
+                    if (sqrt(pow(moutons[i].get_x()- moutons[j].get_x(), 2) + pow(moutons[i].get_y() - moutons[j].get_y(), 2)) < AURA_PROCREATION)
+                    {
+                        interaction.set_nb_sheep(interaction.get_nb_sheep() + 1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+int procreate(Animal * moutons, int size)
+{
+    for (int i = 0 ; i < size; i++)
+    {
+        if (moutons[i].get_alive())
+        {
+            for (int j = 0; j < size; j++)
+            {
+                if(moutons[j].get_alive() && i != j)
+                {
+                    if (sqrt(pow(moutons[i].get_x()- moutons[j].get_x(), 2) 
+                        + pow(moutons[i].get_y() - moutons[j].get_y(), 2)) < AURA_PROCREATION
+                        && moutons[i].get_gender() != moutons[j].get_gender() && !moutons[i].get_time() && !moutons[j].get_time())
+                    {
+                        if (moutons[i].get_gender() == FEMALE )
+                        {
+                            moutons[i].set_time(true);
+                        }
+                        else
+                        {
+                            moutons[j].set_time(true);
+                        }
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+
+int maj_timer(Animal * mouton, bool time)
+{
+    if (time)
+    {
+        mouton->set_timer(mouton->get_timer() - 1);
+        if (mouton->get_timer() == 0)
+        {
+            mouton->set_time(false);
+            mouton->set_timer(1000);
+            return 1;
+        }
+    }
+    return 0;
 }

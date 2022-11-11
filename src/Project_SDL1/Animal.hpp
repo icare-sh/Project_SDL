@@ -5,6 +5,8 @@
 #include <math.h>
 #include "Display.hpp"
 
+enum Gender {MALE, FEMALE};
+
 class Animal : public Display{
     public:
         Animal() = default;
@@ -79,14 +81,38 @@ class Animal : public Display{
         */
         int get_shape_size() const;
 
+        /*
+        * @brief: get the angle of the animal
+        */
         float get_angle() const;
 
+        /*
+        * @brief: set the angle of the animal
+        */
         void set_angle(float angle);
         
         /*
         * @brief: an abstract function to update the position of the animal
         */
         virtual void maj_position(Animal * animals,Animal * other, int size_animals, int size_other ) = 0;
+
+        /*
+        * @brief: set the gender
+        */
+        void set_gender(Gender g);
+        /*
+        * @brief: get the gender
+        */
+        Gender get_gender() const;
+        
+        void set_timer(int timer);
+
+        int get_timer() const;
+
+        void set_time(bool time);
+
+        bool get_time() const;
+
     private:
         int x;
         int y;
@@ -96,7 +122,9 @@ class Animal : public Display{
         bool alive;
         int shape_size;
         float angle;
-       
+        Gender g;
+        int timer;
+        bool time;
 };
 
 #endif // ANIMAL_HPP

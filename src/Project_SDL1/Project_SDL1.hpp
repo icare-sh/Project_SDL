@@ -1,6 +1,6 @@
 ﻿#ifndef PROJECT_SDL1_HPP
 #define PROJECT_SDL1_HPP
-#define NB_SHEEP 10
+#define NB_SHEEP 30
 #define NB_WOLF 15
 #define NB_SHEPHERD_DOG 3
 

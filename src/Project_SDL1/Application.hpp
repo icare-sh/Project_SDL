@@ -6,7 +6,8 @@
 #include <vector>
 
 #include "Interaction.hpp"
-class Application : public Interaction{
+
+class Application : public Interaction {
     public:
         Application() = default;
         ~Application() = default;

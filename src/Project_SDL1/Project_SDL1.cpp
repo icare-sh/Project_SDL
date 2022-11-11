@@ -76,6 +76,7 @@ void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, An
     {
         if(sheeps[i].get_alive() == true)
         {
+        maj_timer(&sheeps[i],sheeps[i].get_time());
         sheeps[i].maj_position(wolfs,sheeps,size_wolfs,size_sheeps);
         SDL_Rect SrcR = {0, 0, sheeps[i].get_shape_size(), sheeps[i].get_shape_size()};
         SDL_Rect DestR = { sheeps[i].get_x() , sheeps[i].get_y()  , sheeps[i].get_shape_size(), sheeps[i].get_shape_size()};
@@ -163,7 +164,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     Wolf * wolves = create_wolves();
 
     //Display sheeps on screen
-    render_copy(renderer, texture[1], sheeps, NB_SHEEP);
+    render_copy(renderer, texture[1], sheeps, interaction.get_nb_sheep());
 
     //Display wolves on screen
     render_copy(renderer, texture[2], wolves, interaction.get_nb_wolves());
@@ -223,16 +224,23 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         //Display background
         SDL_RenderCopy(renderer, texture[0], NULL, NULL);
         //Display sheeps
-        render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, NB_SHEEP, NB_WOLF);
-   
+        render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, interaction.get_nb_sheep(), NB_WOLF);
+        //procreate(sheeps, interaction);
+
         //Display wolves
-        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, NB_SHEEP, NB_SHEPHERD_DOG, interaction.get_nb_wolves());
+        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, interaction.get_nb_sheep(), NB_SHEPHERD_DOG, interaction.get_nb_wolves());
         
         if (interaction.get_nb_wolves() < NB_WOLF && timer == 1000)
         {
             wolves[interaction.get_nb_wolves()].~Wolf();
             interaction.set_nb_wolves(interaction.get_nb_wolves() + 1);
             timer = 0;
+        }
+
+        if (procreate(sheeps, interaction.get_nb_sheep()) == 1)
+        {
+            sheeps[interaction.get_nb_sheep()].~Mouton();
+            interaction.set_nb_sheep(interaction.get_nb_sheep() + 1);
         }
 
         timer++;

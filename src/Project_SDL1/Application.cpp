@@ -5,6 +5,7 @@
 #include <memory>
 #include <math.h>
 #include <unistd.h>
+
 #include "Application.hpp"
 
 SDL_Window* Application::create_window(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)

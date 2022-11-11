@@ -17,18 +17,6 @@ class Shepherd_dog : public Animal {
         * @param: size_other: size of the other array
         */
         void maj_position(Animal * animals,Animal * other, int _x, int _y);
-
-        
-
-        /*
-        * @brief: Find the nearest wolf
-        *
-        * @param: wolfs: a array of wolves
-        * @param: size: the size of the array
-        * @return: the nearest wolves
-        */
-        //Animal * nearest_wolf(Animal * wolfs, int size);
-    
 };
 
 #endif  // SHEPHERD_DOG_HPP

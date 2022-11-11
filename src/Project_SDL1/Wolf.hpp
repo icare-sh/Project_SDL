@@ -30,8 +30,21 @@ class Wolf : public Animal{
         */
         Animal * nearest_sheep(Animal * sheeps, int size);
 
+        /*
+        * @brief: find the nearest dog
+        *
+        * @param: dogs: array of dogs
+        * @param: size: size of the array dogs
+        * @return: the nearest dog
+        */
         Animal * are_shepherd_dogs_near(Animal * shepherd_dog, int size);
 
+        /*
+        * @brief: Speed up the wolf if it is near a dog
+        *
+        * @param: dog: the nearest dog
+        * @return: 1 if the wolf is near a dog
+        */
         int speed_up(Animal * shepherd_dog);
 
         /*
@@ -41,5 +54,7 @@ class Wolf : public Animal{
         * @return: 1 if sheep is killed
         */
         int kill_sheep(Animal * sheep);
+
+        int dont_touch(Animal * wolves, int size);
 };
 #endif // WOLF_HPP

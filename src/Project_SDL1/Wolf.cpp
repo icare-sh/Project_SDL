@@ -38,6 +38,7 @@ void Wolf::maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, 
 {
     Animal * nearest = nearest_sheep(sheeps, size_sheeps);
     Animal * nearest_dogs = are_shepherd_dogs_near(shepherd_dogs, size_shepherd_dogs);
+    
     if(speed_up(nearest_dogs))
     {
 
@@ -100,7 +101,7 @@ int Wolf::speed_up(Animal * shepherd_dog)
     if(sqrt(pow(shepherd_dog[0].get_x()- get_x(), 2) + pow(shepherd_dog[0].get_y() - get_y(), 2)) < AURA_WOLF)
     {
 
-        set_speed(SPEED_WOLF*2);
+        set_speed(SPEED_WOLF*4);
         return 1;
     }
     else
@@ -108,4 +109,19 @@ int Wolf::speed_up(Animal * shepherd_dog)
         set_speed(SPEED_WOLF);
         return 0;
     }
+}
+
+int Wolf::dont_touch(Animal * wolves, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (wolves[i].get_alive())
+        {
+            if(sqrt(pow(wolves[i].get_x()- get_x(), 2) + pow(wolves[i].get_y() - get_y(), 2)) < 40)
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
 }
