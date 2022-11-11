@@ -19,7 +19,7 @@ class Wolf : public Animal{
         * @param: size: size of the array animals
         * @param: size_other: size of the array other
         */
-        void maj_position(Animal * sheeps,Animal * other,int size_animal, int size_other);
+        void maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, int size_shepherd_dogs );
 
         /*
         * @brief: Find the nearest sheep
@@ -29,6 +29,10 @@ class Wolf : public Animal{
         * @return: the nearest sheep
         */
         Animal * nearest_sheep(Animal * sheeps, int size);
+
+        Animal * are_shepherd_dogs_near(Animal * shepherd_dog, int size);
+
+        int speed_up(Animal * shepherd_dog);
 
         /*
         * @brief: Check if the sheep could be killed and kill it

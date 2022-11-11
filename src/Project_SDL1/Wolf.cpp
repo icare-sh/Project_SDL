@@ -34,12 +34,14 @@ Animal * Wolf::nearest_sheep(Animal * sheeps, int size)
 }
 
 
-void Wolf::maj_position(Animal * sheeps,Animal *other, int size_animal, int size_other )
+void Wolf::maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, int size_shepherd_dogs )
 {
-
-    (void)other;
-    (void)size_other;
-    Animal * nearest = nearest_sheep(sheeps, size_animal);
+    Animal * nearest = nearest_sheep(sheeps, size_sheeps);
+    Animal * nearest_dogs = are_shepherd_dogs_near(shepherd_dogs, size_shepherd_dogs);
+    if(speed_up(nearest_dogs))
+    {
+        return;
+    }
         if(!kill_sheep(nearest))
         {
             float temp_taux = 0.1;
@@ -63,3 +65,41 @@ int Wolf::kill_sheep(Animal * sheep)
     return 0;
 }
 
+
+Animal * Wolf::are_shepherd_dogs_near(Animal * shepherd_dog, int size)
+{
+    Animal * nearest = nullptr;
+    float distance = 0;
+    float temp_distance = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if (shepherd_dog[i].get_alive())
+        {
+            
+            temp_distance = sqrt(pow(shepherd_dog[i].get_x()- get_x(), 2) + pow(shepherd_dog[i].get_y() - get_y(), 2));
+            if (temp_distance < distance || distance == 0)
+            {
+                distance = temp_distance;
+                nearest = &shepherd_dog[i];
+            }
+        }
+    }
+    return nearest;
+}
+
+int Wolf::speed_up(Animal * shepherd_dog)
+{
+    if(sqrt(pow(shepherd_dog[0].get_x()- get_x(), 2) + pow(shepherd_dog[0].get_y() - get_y(), 2)) < AURA_WOLF)
+    {
+
+        set_speed(SPEED_WOLF*3);
+        set_direction_x(shepherd_dog[0].get_x() + 100);
+        set_direction_y(shepherd_dog[0].get_y() + 100);
+        return 1;
+    }
+    else
+    {
+        set_speed(SPEED_WOLF);
+        return 0;
+    }
+}

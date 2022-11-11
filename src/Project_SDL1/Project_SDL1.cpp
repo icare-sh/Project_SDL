@@ -224,7 +224,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, NB_SHEEP, NB_WOLF);
    
         //Display wolves
-        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, other, wolves, NB_SHEEP, size_other, NB_WOLF);
+        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, NB_SHEEP, NB_SHEPHERD_DOG, NB_WOLF);
 
         //Display shepherd
         render_copy_shepherd(renderer, texture[3], shepherd);

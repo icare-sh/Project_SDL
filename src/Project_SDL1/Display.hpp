@@ -10,7 +10,9 @@
 #define SCREEN_HEIGHT 1080
 #define AURA_KILL 35
 #define SPEED_SHEEP 2
+#define SPEED_WOLF 2
 #define AURA_MOUTON 150 
+#define AURA_WOLF 400
 #define ORBIT_SPEED 0.005f
 #define ORBIT_RADIUS 170.0f
 
