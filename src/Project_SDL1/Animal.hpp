@@ -79,6 +79,10 @@ class Animal : public Display{
         */
         int get_shape_size() const;
 
+        float get_angle() const;
+
+        void set_angle(float angle);
+        
         /*
         * @brief: an abstract function to update the position of the animal
         */
@@ -91,6 +95,7 @@ class Animal : public Display{
         float direction_y;
         bool alive;
         int shape_size;
+        float angle;
        
 };
 

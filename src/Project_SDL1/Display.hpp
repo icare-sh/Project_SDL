@@ -11,6 +11,9 @@
 #define AURA_KILL 35
 #define SPEED_SHEEP 2
 #define AURA_MOUTON 150 
+#define ORBIT_SPEED 0.005f
+#define ORBIT_RADIUS 170.0f
+
 class Display : public Application {
     public:
         Display() = default;

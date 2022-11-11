@@ -14,14 +14,16 @@ int main(int argc, char* argv[])
     SDL_Texture **texture = NULL; // Declare a texture
     SDL_Surface *surface = NULL; // Declare a surface
     Application app;
+    int nb_texture = 5; // Number of texture
 
-    texture = new SDL_Texture*[4];
+    texture = new SDL_Texture*[nb_texture];
     texture[0] = NULL; // Declare texture for background
     texture[1] = NULL; // Declare texture for sheep
-    texture[2] = NULL; // Declare texture for wolf
+    texture[2] = NULL; // Declare texture for wolves
     texture[3] = NULL; // Declare texture for shepherd
+    texture[4] = NULL; // Declare texture for dogs
     
-    int nb_texture = 4; // Number of texture
+    
 
     // Initialize SDL, create a window and set the renderer
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)

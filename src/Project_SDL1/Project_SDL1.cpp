@@ -21,6 +21,13 @@ Wolf * create_wolves()
     return wolves;
 }
 
+// Create a NB_SHEPHERD_DOG of shepherd dog
+Shepherd_dog * create_shepherd_dog()
+{
+    Shepherd_dog * shepherd_dogs = new Shepherd_dog[NB_SHEPHERD_DOG];
+    return shepherd_dogs;
+}
+
 //Initiate one class Animal
 void render_copy(SDL_Renderer *renderer, SDL_Texture *texture, Animal * animals,int size)
 {
@@ -102,6 +109,18 @@ void render_copy_shepherd(SDL_Renderer *renderer, SDL_Texture *texture, Shepherd
     SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
 }
 
+//Maj position of shepherd dog
+void render_copy_maj_pos_shepherd_dog(SDL_Renderer *renderer, SDL_Texture *texture, Animal  * dog, int x, int y, Animal *other)
+{
+    for (int i = 0; i < NB_SHEPHERD_DOG; i++)
+    {
+        dog[i].maj_position(dog,other, x,y);
+        SDL_Rect SrcR = {0, 0, dog[i].get_shape_size(), dog[i].get_shape_size()};
+        SDL_Rect DestR = { dog[i].get_x() , dog[i].get_y()  , dog[i].get_shape_size(), dog[i].get_shape_size()};
+        SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
+    }
+}
+
 
 //INIT GAME
 int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface) 
@@ -122,6 +141,8 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     //Call shepherd class
     auto shepherd = Shepherd();
 
+    //Call shepherd_dog class
+    Shepherd_dog  * shepherd_dogs = create_shepherd_dog();
     // ----Create sheep----
     //Load image with path of img
     texture[1] = display.load_image(renderer, texture[1], surface, "media/sheep1.bmp");
@@ -131,6 +152,9 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
 
     //Load shepherd image
     texture[3] = display.load_image(renderer, texture[3], surface, "media/Berger.bmp");
+
+    //Load shepherd dog image
+    texture[4] = display.load_image(renderer, texture[4], surface, "media/dog.bmp");
 
     //Create NB_SHEPP of sheeps & init position
     Mouton * sheeps = create_sheeps();
@@ -147,6 +171,8 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     //Display shepherd on screen
     render_copy_shepherd(renderer, texture[3], shepherd);
     
+    //Display shepherd dog on screen
+    render_copy(renderer, texture[4], shepherd_dogs, NB_SHEPHERD_DOG);
 
 
     //load background image
@@ -202,6 +228,9 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
 
         //Display shepherd
         render_copy_shepherd(renderer, texture[3], shepherd);
+
+        //Display shepherd dog
+        render_copy_maj_pos_shepherd_dog(renderer, texture[4], shepherd_dogs, shepherd.get_x(), shepherd.get_y(), other);
      
         //Update screen
         SDL_RenderPresent(renderer);
@@ -211,6 +240,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     delete[] sheeps;
     delete[] wolves;
     delete[] other;
+    delete[] shepherd_dogs;
 
     return 0;
 }
