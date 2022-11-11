@@ -33,16 +33,6 @@ Animal * Wolf::nearest_sheep(Animal * sheeps, int size)
     return nearest;
 }
 
-int Wolf::kill_sheep(Animal * sheep)
-{
-    if(sqrt(pow(sheep[0].get_x()- get_x(), 2) + pow(sheep[0].get_y() - get_y(), 2)) < AURA_KILL)
-    {
-        sheep[0].set_alive(false);
-        return 1;
-    }
-    return 0;
-}
-
 
 void Wolf::maj_position(Animal * sheeps,Animal *other, int size_animal, int size_other )
 {
@@ -63,5 +53,13 @@ void Wolf::maj_position(Animal * sheeps,Animal *other, int size_animal, int size
         }
 }
 
-
+int Wolf::kill_sheep(Animal * sheep)
+{
+    if(sqrt(pow(sheep[0].get_x()- get_x(), 2) + pow(sheep[0].get_y() - get_y(), 2)) < AURA_KILL)
+    {
+        sheep[0].set_alive(false);
+        return 1;
+    }
+    return 0;
+}
 

@@ -14,6 +14,7 @@ Mouton * create_sheeps()
 
 }
 
+// Create a NB_WOLF of wolf
 Wolf * create_wolves()
 {
     Wolf * wolves = new Wolf[NB_WOLF];
@@ -57,6 +58,7 @@ void render_copy_maj_pos(SDL_Renderer *renderer, SDL_Texture *texture, Animal * 
 
 }
 
+//Maj position of sheeps
 void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, Animal * sheeps,Animal * wolfs, int size_sheeps, int size_wolfs)
 {
     //delete the sheep if alive == false
@@ -79,7 +81,7 @@ void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, An
 
 }
 
-
+//Maj position of wolfs
 void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Animal * sheeps,Animal * dog, Animal *wolf, int size_sheeps, int size_dog, int size_wolf)
 {
     for (int i = 0; i < size_wolf; i++)
@@ -96,8 +98,9 @@ void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Anim
 int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface) 
 {
     //other definition
-    int size_other = 10;
+    int size_other = NB_SHEEP;
     Mouton * other = new Mouton[size_other];
+
     //reset random
     srand (time (NULL));
 
