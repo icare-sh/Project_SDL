@@ -164,6 +164,3 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
 
     return 0;
 }
-
-
-
