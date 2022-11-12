@@ -9,6 +9,8 @@ Wolf::Wolf()
     set_direction_y(0);
     set_alive(true);
     set_shape_size(70);
+    set_timer(TIME_TO_DIE);
+    set_time(false);
 }
 
 
@@ -124,4 +126,18 @@ int Wolf::dont_touch(Animal * wolves, int size)
         }
     }
     return 0;
+}
+
+void maj_timer(Animal * wolves)
+{
+    wolves->set_timer(wolves->get_timer() - 1);
+}
+
+void check_if_time_is_over(Animal * wolve)
+{
+    if(wolve->get_timer() <= 0 && wolve->get_alive())
+    {
+        wolve->set_time(true);
+        wolve->set_alive(false);
+    }
 }

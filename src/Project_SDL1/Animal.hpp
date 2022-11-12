@@ -5,6 +5,9 @@
 #include <math.h>
 #include "Display.hpp"
 
+#define TIME_TO_PROCREATE 1500
+#define TIME_TO_DIE 3000
+
 enum Gender {MALE, FEMALE};
 
 class Animal : public Display{
@@ -124,7 +127,7 @@ class Animal : public Display{
         float angle;
         Gender g;
         int timer;
-        bool time;
+        bool time; // a bool to know if the animal is in the process of procreating(for sheeps) or dying (for wolves)
 };
 
 #endif // ANIMAL_HPP

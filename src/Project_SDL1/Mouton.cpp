@@ -20,7 +20,7 @@ Mouton::Mouton()
         set_gender(FEMALE);
         set_shape_size(80);
     }
-    set_timer(1000);
+    set_timer(TIME_TO_PROCREATE);
     set_time(false);
 }
 
@@ -98,27 +98,6 @@ void Mouton::maj_position(Animal * wolves,Animal * other,int size, int size_othe
 
 }
 
-
-void procreate(Animal * moutons, Interaction interaction)
-{
-    for (int i = 0 ; i < interaction.get_nb_sheep(); i++)
-    {
-        if (moutons[i].get_alive())
-        {
-            for (int j = 0; j < interaction.get_nb_sheep(); i++)
-            {
-                if(moutons[j].get_alive() && i != j)
-                {
-                    if (sqrt(pow(moutons[i].get_x()- moutons[j].get_x(), 2) + pow(moutons[i].get_y() - moutons[j].get_y(), 2)) < AURA_PROCREATION)
-                    {
-                        interaction.set_nb_sheep(interaction.get_nb_sheep() + 1);
-                    }
-                }
-            }
-        }
-    }
-}
-
 int procreate(Animal * moutons, int size)
 {
     for (int i = 0 ; i < size; i++)
@@ -159,7 +138,7 @@ int maj_timer(Animal * mouton, bool time)
         if (mouton->get_timer() == 0)
         {
             mouton->set_time(false);
-            mouton->set_timer(1000);
+            mouton->set_timer(TIME_TO_PROCREATE);
             return 1;
         }
     }

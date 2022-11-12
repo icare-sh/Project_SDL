@@ -50,7 +50,6 @@ int procreate(Animal * moutons, int size);
 /*
 * @brief: update timer to make mouton pregnant
 */
-
 int maj_timer(Animal * mouton, bool time);
 
 #endif // MOUTON_HPP

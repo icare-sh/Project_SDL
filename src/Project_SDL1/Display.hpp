@@ -16,7 +16,7 @@
 #define AURA_WOLF 300 //aura of the wolf to run away from the shepherd dog
 #define ORBIT_SPEED 0.005f //speed of the shepherd dog
 #define ORBIT_RADIUS 170.0f //radius of the shepherd dog
-#define AURA_PROCREATION 5 //aura of the sheep to procreate 
+#define AURA_PROCREATION 10 //aura of the sheep to procreate 
 
 class Display : public Application {
     public:

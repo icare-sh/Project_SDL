@@ -95,10 +95,16 @@ void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Anim
 {
     for (int i = 0; i < size_wolf; i++)
     {
-        wolf[i].maj_position(sheeps,dog,size_sheeps,size_dog);
-        SDL_Rect SrcR = {0, 0, wolf[i].get_shape_size(), wolf[i].get_shape_size()};
-        SDL_Rect DestR = { wolf[i].get_x() , wolf[i].get_y()  , wolf[i].get_shape_size(), wolf[i].get_shape_size()};
-        SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
+        check_if_time_is_over(&wolf[i]);
+
+        if(wolf[i].get_alive() == true)
+        {
+            maj_timer(&wolf[i]);
+            wolf[i].maj_position(sheeps,dog,size_sheeps,size_dog);
+            SDL_Rect SrcR = {0, 0, wolf[i].get_shape_size(), wolf[i].get_shape_size()};
+            SDL_Rect DestR = { wolf[i].get_x() , wolf[i].get_y()  , wolf[i].get_shape_size(), wolf[i].get_shape_size()};
+            SDL_RenderCopy(renderer, texture, &SrcR , &DestR);
+        } 
     }
 }
 
@@ -122,6 +128,28 @@ void render_copy_maj_pos_shepherd_dog(SDL_Renderer *renderer, SDL_Texture *textu
     }
 }
 
+void get_shepherd_direction(SDL_Event event, Shepherd *shepherd)
+
+{
+    if(event.type == SDL_KEYDOWN)
+    {
+        switch(event.key.keysym.sym)
+        {
+            case SDLK_UP:
+                shepherd->move_up();
+                break;
+            case SDLK_DOWN:
+                shepherd->move_down();
+                break;
+            case SDLK_LEFT:
+                shepherd->move_left();
+                break;
+            case SDLK_RIGHT:
+                shepherd->move_right();
+                break;
+        }
+    }
+}
 
 //INIT GAME
 int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface) 
@@ -138,13 +166,10 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
 
     //Call display class
     Display display;
+    
+     //load background image
+    texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
 
-    //Call shepherd class
-    auto shepherd = Shepherd();
-
-    //Call shepherd_dog class
-    Shepherd_dog  * shepherd_dogs = create_shepherd_dog();
-    // ----Create sheep----
     //Load image with path of img
     texture[1] = display.load_image(renderer, texture[1], surface, "media/sheep1.bmp");
 
@@ -163,102 +188,70 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     //Create NB_WOLF of wolves & init position
     Wolf * wolves = create_wolves();
 
+    //Call shepherd_dog class
+    Shepherd_dog  * shepherd_dogs = create_shepherd_dog();
+
+    //Call shepherd class
+    auto shepherd = Shepherd();
+
     //Display sheeps on screen
     render_copy(renderer, texture[1], sheeps, interaction.get_nb_sheep());
 
     //Display wolves on screen
     render_copy(renderer, texture[2], wolves, interaction.get_nb_wolves());
 
-    //Display shepherd on screen
-    render_copy_shepherd(renderer, texture[3], shepherd);
-    
     //Display shepherd dog on screen
     render_copy(renderer, texture[4], shepherd_dogs, NB_SHEPHERD_DOG);
 
-
-    //load background image
-    texture[0] = display.load_image(renderer, texture[0], surface, "media/background.bmp");
-    
-    //infinte loop of the game
     //timer of the game
     int timer = 0;
 
     while (!shouldStop) 
     {
-        //Event with mouse
         SDL_Event event;
 
         while (SDL_PollEvent(&event)) 
         {
-
              switch (event.type) 
              {
                 case SDL_QUIT:
                     shouldStop = SDL_TRUE;
                     break;
                 case SDL_KEYDOWN:
-                    switch (event.key.keysym.sym) 
-                    {
-                        case SDLK_ESCAPE:
-                            shouldStop = SDL_TRUE;
-                            break;
-                        case SDLK_UP:
-                            shepherd.move_up();
-                            break;
-                        case SDLK_DOWN:
-                            shepherd.move_down();
-                            break;
-                        case SDLK_LEFT:
-                            shepherd.move_left();
-                            break;
-                        case SDLK_RIGHT:
-                            shepherd.move_right();
-                            break;
-                    }
+                    get_shepherd_direction(event, &shepherd);
                     break;
                 default:
                     break;
              }
         }
 
-        //Display background
-        SDL_RenderCopy(renderer, texture[0], NULL, NULL);
-        //Display sheeps
-        render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, interaction.get_nb_sheep(), NB_WOLF);
-        //procreate(sheeps, interaction);
-
-        //Display wolves
-        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, interaction.get_nb_sheep(), NB_SHEPHERD_DOG, interaction.get_nb_wolves());
         
+        SDL_RenderCopy(renderer, texture[0], NULL, NULL); //Display background
+        render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, interaction.get_nb_sheep(), NB_WOLF); //Display sheeps
+        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, interaction.get_nb_sheep(), NB_SHEPHERD_DOG, interaction.get_nb_wolves()); //Display wolves
+        
+        /*
         if (interaction.get_nb_wolves() < NB_WOLF && timer == 1000)
         {
             wolves[interaction.get_nb_wolves()].~Wolf();
             interaction.set_nb_wolves(interaction.get_nb_wolves() + 1);
             timer = 0;
         }
+        */
 
         if (procreate(sheeps, interaction.get_nb_sheep()) == 1)
         {
-            sheeps[interaction.get_nb_sheep()].~Mouton();
+            //sheeps[interaction.get_nb_sheep()].~Mouton();
             interaction.set_nb_sheep(interaction.get_nb_sheep() + 1);
         }
 
         timer++;
-        //Display shepherd
-        render_copy_shepherd(renderer, texture[3], shepherd);
-
-        //Display shepherd dog
-        render_copy_maj_pos_shepherd_dog(renderer, texture[4], shepherd_dogs, shepherd.get_x(), shepherd.get_y(), other);
-     
-        //Update screen
-        SDL_RenderPresent(renderer);
-                //FPS
-        SDL_Delay(10);
+        render_copy_shepherd(renderer, texture[3], shepherd); //Display shepherd
+        render_copy_maj_pos_shepherd_dog(renderer, texture[4], shepherd_dogs, shepherd.get_x(), shepherd.get_y(), other); //Display shepherd dog
+        SDL_RenderPresent(renderer); //Update screen
+        SDL_Delay(10); //FPS
     }
-    delete[] sheeps;
-    delete[] wolves;
-    delete[] other;
-    delete[] shepherd_dogs;
+    delete[] sheeps; delete[] wolves; delete[] other; delete[] shepherd_dogs;
 
     return 0;
 }

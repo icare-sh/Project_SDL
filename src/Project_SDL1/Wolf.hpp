@@ -57,4 +57,14 @@ class Wolf : public Animal{
 
         int dont_touch(Animal * wolves, int size);
 };
+
+/*
+* @brief: update timer
+*/
+void maj_timer(Animal * wolves);
+
+/*
+* @brief: check if time to live over and set alive to false if time is over
+*/
+void check_if_time_is_over(Animal * wolve);
 #endif // WOLF_HPP
