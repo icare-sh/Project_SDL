@@ -23,6 +23,6 @@ class Interaction
 
 
     private:
-        int nb_sheep = 5;
+        int nb_sheep = 7;
         int nb_wolves = 3;
 };

@@ -54,8 +54,6 @@ class Wolf : public Animal{
         * @return: 1 if sheep is killed
         */
         int kill_sheep(Animal * sheep);
-
-        int dont_touch(Animal * wolves, int size);
 };
 
 /*
@@ -67,4 +65,10 @@ void maj_timer(Animal * wolves);
 * @brief: check if time to live over and set alive to false if time is over
 */
 void check_if_time_is_over(Animal * wolve);
+
+/*
+* @brief: wolves don't touch them each other
+*/
+void dont_touch(Animal * wolves, int size);
+
 #endif // WOLF_HPP

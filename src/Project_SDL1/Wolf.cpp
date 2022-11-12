@@ -63,6 +63,9 @@ void Wolf::maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, 
 
         set_x(get_x() + get_direction_x() * get_speed()/temp_taux);
         set_y(get_y() + get_direction_y() * get_speed()/temp_taux);
+    } else if (kill_sheep(nearest))
+    {
+        set_timer(TIME_TO_DIE); // reset timer to die
     }
 }
 
@@ -71,7 +74,7 @@ int Wolf::kill_sheep(Animal * sheep)
     if(sqrt(pow(sheep[0].get_x()- get_x(), 2) + pow(sheep[0].get_y() - get_y(), 2)) < AURA_KILL)
     {
         sheep[0].set_alive(false);
-        return 1;
+        return 1; // sheep killed
     }
     return 0;
 }
@@ -113,19 +116,29 @@ int Wolf::speed_up(Animal * shepherd_dog)
     }
 }
 
-int Wolf::dont_touch(Animal * wolves, int size)
+void dont_touch(Animal * wolves, int size)
 {
     for (int i = 0; i < size; i++)
     {
         if (wolves[i].get_alive())
         {
-            if(sqrt(pow(wolves[i].get_x()- get_x(), 2) + pow(wolves[i].get_y() - get_y(), 2)) < 40)
+            for (int j = 0; j < size; j++)
             {
-                return 1;
+                if (wolves[j].get_alive() && i != j)
+                {
+                    if(sqrt(pow(wolves[i].get_x()- wolves[j].get_x(), 2) + pow(wolves[i].get_y() - wolves[j].get_y(), 2)) < 100)
+                    {
+                        float temp_taux = 0.1;
+
+                        temp_taux = sqrt(pow(wolves[i].get_direction_x(), 2) + pow(wolves[i].get_direction_y(), 2));
+
+                        wolves[i].set_x(wolves[i].get_x() + (rand() % 100 + 1) * wolves[i].get_speed()/temp_taux);
+                        wolves[i].set_y(wolves[i].get_y() + (rand() % 100 + 1) * wolves[i].get_speed()/temp_taux);
+                    }
+                }
             }
         }
     }
-    return 0;
 }
 
 void maj_timer(Animal * wolves)
