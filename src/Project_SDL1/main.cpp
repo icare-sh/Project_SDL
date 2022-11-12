@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 {  
     SDL_Window *window = NULL; // Declare a window
     SDL_Renderer *renderer = NULL; // Declare a renderer
-    SDL_Texture **texture = NULL; // Declare a texture
+    SDL_Texture **texture = NULL; // Declare a list of texture
     SDL_Surface *surface = NULL; // Declare a surface
     Application app;
     int nb_texture = 5; // Number of texture

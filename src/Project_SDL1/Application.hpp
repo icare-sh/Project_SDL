@@ -1,8 +1,13 @@
+#ifndef APPLICATION_HPP
+#define APPLICATION_HPP
+
 #include <SDL.h>
 #include <iostream>
 #include <vector>
 
-class Application {
+#include "Interaction.hpp"
+
+class Application : public Interaction {
     public:
         Application() = default;
         ~Application() = default;
@@ -38,3 +43,4 @@ class Application {
 
 };
 
+#endif // APPLICATION_HPP

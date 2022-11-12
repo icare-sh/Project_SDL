@@ -13,9 +13,8 @@ class Interaction
     public:
         Interaction() = default; // default constructor
         ~Interaction() = default; // default destructor
-        virtual Interaction interact() const;  // virtual function memeber
 
-        // getter and setter
+        // Set number of sheep
         void set_nb_sheep(int x);
         int get_nb_sheep() const;
         void set_nb_wolves(int y);
@@ -24,6 +23,6 @@ class Interaction
 
 
     private:
-        int nb_sheep = 4;
+        int nb_sheep = 7;
         int nb_wolves = 3;
 };
