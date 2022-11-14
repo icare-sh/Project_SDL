@@ -66,7 +66,7 @@ void render_copy_maj_pos(SDL_Renderer *renderer, SDL_Texture *texture, Animal * 
 }
 
 //Maj position of sheeps
-void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, Animal * sheeps,Animal * wolfs, int size_sheeps, int size_wolfs)
+void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, Animal * sheeps,Animal * wolfs, int size_sheeps, int size_wolfs,SDL_Texture *texture2)
 {
     //delete the sheep if alive == false
 
@@ -79,7 +79,17 @@ void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, An
         sheeps[i].maj_position(wolfs,sheeps,size_wolfs,size_sheeps,NULL);
         SDL_Rect SrcR = {0, 0, sheeps[i].get_shape_size(), sheeps[i].get_shape_size()};
         SDL_Rect DestR = { sheeps[i].get_x() , sheeps[i].get_y()  , sheeps[i].get_shape_size(), sheeps[i].get_shape_size()};
-        SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
+        if(sheeps[i].get_gender() == MALE)
+        {
+            SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
+        }
+        else if (sheeps[i].get_gender() == FEMALE)
+        {
+            SDL_RenderCopy(renderer, texture2, &SrcR , &DestR); 
+        }
+        
+        
+        
         }
         else
         {
@@ -187,6 +197,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     texture[2] = display.load_image(renderer, texture[2], surface, "media/wolf1.bmp"); //Load wolf image
     texture[3] = display.load_image(renderer, texture[3], surface, "media/Berger.bmp"); //Load shepherd image
     texture[4] = display.load_image(renderer, texture[4], surface, "media/dog.bmp"); //Load shepherd dog image
+    texture[5] = display.load_image(renderer, texture[4], surface, "media/sheep_femme.bmp"); //Load shepherd dog image
 
     Mouton * sheeps = create_sheeps(); //Create NB_SHEPP of sheeps & init position
     Wolf * wolves = create_wolves(); //Create NB_WOLF of wolves & init position
@@ -251,7 +262,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         }
         
         SDL_RenderCopy(renderer, texture[0], NULL, NULL); //Display background
-        render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, interaction.get_nb_sheep(), NB_WOLF); //Display sheeps
+        render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, interaction.get_nb_sheep(), NB_WOLF,texture[5]); //Display sheeps
         render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, interaction.get_nb_sheep(), NB_SHEPHERD_DOG, interaction.get_nb_wolves(),&shepherd); //Display wolves
         timer = increase_nb_wolves(&interaction, timer); //Increase nb wolves for more difficulty
 
