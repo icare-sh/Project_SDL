@@ -2,7 +2,7 @@
 #define PROJECT_SDL1_HPP
 #define NB_SHEEP 30
 #define NB_WOLF 12
-#define NB_SHEPHERD_DOG 3
+
 
 #include "Mouton.hpp"
 #include "Wolf.hpp"

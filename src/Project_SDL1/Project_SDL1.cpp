@@ -199,12 +199,16 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
 
     //timer of the game
     int timer = 0;
-
+    Shepherd_dog * shepherd_dog_selection = new Shepherd_dog();
     while (!shouldStop) 
     {
         SDL_Event event;
         while (SDL_PollEvent(&event)) 
-        {
+        {   
+            if(shepherd_dog_selection != NULL)
+            {
+            printf("Shepherd dog selectionx,y: %d %d\n", shepherd_dog_selection->get_x(), shepherd_dog_selection->get_y());
+            }
              switch (event.type) 
              {
                 case SDL_QUIT:
@@ -213,6 +217,32 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
                 case SDL_KEYDOWN:
                     get_shepherd_direction(event, &shepherd);
                     break;
+                case SDL_MOUSEBUTTONDOWN:
+                    if (event.button.button == SDL_BUTTON_LEFT)
+                    {
+                        shepherd_dog_selection = shepherd_dogs->get_shepherd_dog_selection(shepherd_dogs, event.button.x, event.button.y);
+                        if (shepherd_dog_selection != NULL)
+                        {
+                            //affiche pos
+                            std::cout << "x : " << shepherd_dog_selection->get_x() << " y : " << shepherd_dog_selection->get_y() << std::endl;
+                        }
+                    }
+                    if(event.button.button == SDL_BUTTON_RIGHT)
+                    {
+                        if (shepherd_dog_selection != NULL)
+                        {
+                            printf("x : %d y : %d\n", event.button.x, event.button.y);
+                            shepherd_dog_selection->set_direction_x(event.button.x-shepherd_dog_selection->get_x());
+                            shepherd_dog_selection->set_direction_y(event.button.y-shepherd_dog_selection->get_y());
+                            shepherd_dog_selection->set_is_hunting(true);
+                            shepherd_dog_selection = NULL;
+                            
+
+                        }
+                    }
+                    
+                    break;
+                
                 default:
                     break;
              }
@@ -231,7 +261,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         SDL_RenderPresent(renderer); //Update screen
         SDL_Delay(10); //FPS
     }
-    delete[] sheeps; delete[] wolves; delete[] other; delete[] shepherd_dogs;
+    delete[] sheeps; delete[] wolves; delete[] other; delete[] shepherd_dogs; delete[] shepherd_dog_selection;
 
     return 0;
 }
