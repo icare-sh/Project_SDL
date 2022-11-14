@@ -8,6 +8,7 @@
 #define TIME_TO_PROCREATE 1500
 #define TIME_TO_DIE 3000
 #define NB_SHEPHERD_DOG 3
+
 enum Gender {MALE, FEMALE};
 
 class Animal : public Display{
@@ -116,6 +117,14 @@ class Animal : public Display{
 
         bool get_time() const;
 
+        void set_x_hunt(int x);
+
+        void set_y_hunt(int y);
+
+        int get_x_hunt() const;
+
+        int get_y_hunt() const;
+
     private:
         int x;
         int y;
@@ -128,6 +137,8 @@ class Animal : public Display{
         Gender g;
         int timer;
         bool time; // a bool to know if the animal is in the process of procreating(for sheeps) or dying (for wolves)
+        int x_hunt;
+        int y_hunt;
 };
 
 #endif // ANIMAL_HPP

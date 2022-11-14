@@ -13,6 +13,7 @@ Shepherd_dog::Shepherd_dog()
     set_angle(rand() % 360);
     set_shape_size(80);
     set_is_hunting(false);
+
 }
 void Shepherd_dog::maj_position(Animal * animals,Animal * other, int _x, int _y,Shepherd * shepherd)
 {
@@ -27,13 +28,38 @@ void Shepherd_dog::maj_position(Animal * animals,Animal * other, int _x, int _y,
         set_angle( get_angle() +  ORBIT_SPEED);
     if(get_is_hunting())
     {
-        printf("CHaase!!!!\n");
+        if(get_go_hunt())
+        {
+            set_direction_x(get_x_hunt() - get_x());
+            set_direction_y(get_y_hunt() - get_y());
+            
+        }
+        else
+        {
+            set_direction_x(_x + cos(get_angle()) * ORBIT_RADIUS - get_x());
+            set_direction_y(_y + sin(get_angle()) * ORBIT_RADIUS - get_y());
 
-    temp_taux = sqrt(pow(get_direction_x(), 2) + pow(get_direction_y(), 2));
-    set_x(get_x() + get_speed() * get_direction_x() / temp_taux);
-    set_y(get_y() + get_speed() * get_direction_y() / temp_taux);
-    
-    }else
+
+        }
+        //Aller vers le baton
+        if(get_x() > get_x_hunt() - 10 && get_x() < get_x_hunt() + 10 && get_y() > get_y_hunt() - 10 && get_y() < get_y_hunt() + 10)
+            {
+                set_go_hunt(false);
+
+            }
+        //retour vers le berger
+        if(!get_go_hunt() && get_x() > _x + cos(get_angle()) * ORBIT_RADIUS - 10 && get_x() < _x + cos(get_angle()) * ORBIT_RADIUS + 10 && get_y() > _y + sin(get_angle()) * ORBIT_RADIUS - 10 && get_y() < _y + sin(get_angle()) * ORBIT_RADIUS + 10)
+            {
+                set_is_hunting(false);
+            }
+
+        temp_taux = sqrt(pow(get_direction_x(), 2) + pow(get_direction_y(), 2));
+            set_x(get_x() + get_speed() * get_direction_x() / temp_taux);
+            set_y(get_y() + get_speed() * get_direction_y() / temp_taux);
+
+
+    }
+    else
     {
         set_x(_x + cos(get_angle()) * ORBIT_RADIUS);
         set_y(_y + sin(get_angle()) * ORBIT_RADIUS);
@@ -65,3 +91,12 @@ bool Shepherd_dog::get_is_hunting() const
     return this->is_hunting;
 }
 
+void Shepherd_dog::set_go_hunt(bool go_hunt)
+{
+    this->is_go_hunt = go_hunt;
+}
+
+bool Shepherd_dog::get_go_hunt() const
+{
+    return this->is_go_hunt;
+}

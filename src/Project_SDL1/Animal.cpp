@@ -109,3 +109,23 @@ bool Animal::get_time() const
 {
     return time;
 }
+
+void Animal::set_x_hunt(int x)
+{
+    this->x_hunt = x;
+}
+
+int Animal::get_x_hunt() const
+{
+    return x_hunt;
+}
+
+void Animal::set_y_hunt(int y)
+{
+    this->y_hunt = y;
+}
+
+int Animal::get_y_hunt() const
+{
+    return y_hunt;
+}

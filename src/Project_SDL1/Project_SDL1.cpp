@@ -232,9 +232,11 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
                         if (shepherd_dog_selection != NULL)
                         {
                             printf("x : %d y : %d\n", event.button.x, event.button.y);
-                            shepherd_dog_selection->set_direction_x(event.button.x-shepherd_dog_selection->get_x());
-                            shepherd_dog_selection->set_direction_y(event.button.y-shepherd_dog_selection->get_y());
+
+                            shepherd_dog_selection->set_x_hunt(event.button.x);
+                            shepherd_dog_selection->set_y_hunt(event.button.y);
                             shepherd_dog_selection->set_is_hunting(true);
+                            shepherd_dog_selection->set_go_hunt(true);
                             shepherd_dog_selection = NULL;
                             
 

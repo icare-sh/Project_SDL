@@ -2,7 +2,7 @@
 #define SHEPHERD_DOG_HPP
 
 #include "Animal.hpp"
-#include "Shepherd.hpp"
+
 
 class Shepherd_dog : public Animal {
     public:
@@ -21,16 +21,17 @@ class Shepherd_dog : public Animal {
         //set and get is hunting
         void set_is_hunting(bool is_hunting);
         bool get_is_hunting() const;
-        void set_x_go_hunt(int x);
-        void set_y_go_hunt(int y);
-       
+        void set_go_hunt(bool go_hunt);
+        bool get_go_hunt() const;
       
     private:
         bool is_hunting;
-        //int x_hunting;
-        //int y_hunting;
-        int x_go_hunt;
-        int y_go_hunt;
+        bool is_go_hunt;
+
+        
+        
+        
+
 };
 
 
