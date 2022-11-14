@@ -151,16 +151,16 @@ void get_shepherd_direction(SDL_Event event, Shepherd *shepherd)
     {
         switch(event.key.keysym.sym)
         {
-            case SDLK_UP:
+            case SDLK_z:
                 shepherd->move_up();
                 break;
-            case SDLK_DOWN:
+            case SDLK_s:
                 shepherd->move_down();
                 break;
-            case SDLK_LEFT:
+            case SDLK_q:
                 shepherd->move_left();
                 break;
-            case SDLK_RIGHT:
+            case SDLK_d:
                 shepherd->move_right();
                 break;
         }
@@ -232,17 +232,11 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
                     if (event.button.button == SDL_BUTTON_LEFT)
                     {
                         shepherd_dog_selection = shepherd_dogs->get_shepherd_dog_selection(shepherd_dogs, event.button.x, event.button.y);
-                        if (shepherd_dog_selection != NULL)
-                        {
-                            //affiche pos
-                            std::cout << "x : " << shepherd_dog_selection->get_x() << " y : " << shepherd_dog_selection->get_y() << std::endl;
-                        }
                     }
                     if(event.button.button == SDL_BUTTON_RIGHT)
                     {
                         if (shepherd_dog_selection != NULL)
                         {
-                            printf("x : %d y : %d\n", event.button.x, event.button.y);
 
                             shepherd_dog_selection->set_x_hunt(event.button.x);
                             shepherd_dog_selection->set_y_hunt(event.button.y);
