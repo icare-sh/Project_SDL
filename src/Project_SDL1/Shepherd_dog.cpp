@@ -14,7 +14,7 @@ Shepherd_dog::Shepherd_dog()
     set_shape_size(80);
 }
 
-void Shepherd_dog::maj_position(Animal * animals,Animal * other, int _x, int _y )
+void Shepherd_dog::maj_position(Animal * animals,Animal * other, int _x, int _y,Shepherd * shepherd)
 {
     (void)other;
     float tmp_speed = 0.02;

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include "Display.hpp"
-
+#include "Shepherd.hpp"
 #define TIME_TO_PROCREATE 1500
 #define TIME_TO_DIE 3000
 
@@ -97,7 +97,7 @@ class Animal : public Display{
         /*
         * @brief: an abstract function to update the position of the animal
         */
-        virtual void maj_position(Animal * animals,Animal * other, int size_animals, int size_other ) = 0;
+        virtual void maj_position(Animal * animals,Animal * other, int size_animals, int size_other,Shepherd * shepherd) = 0;
 
         /*
         * @brief: set the gender

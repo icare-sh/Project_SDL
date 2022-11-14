@@ -63,7 +63,7 @@ int Mouton::speed_up(Animal * wolf)
     }
 }
 
-void Mouton::maj_position(Animal * wolves,Animal * other,int size, int size_other)
+void Mouton::maj_position(Animal * wolves,Animal * other,int size, int size_other,Shepherd * shepherd)
 {
 
     (void) other;

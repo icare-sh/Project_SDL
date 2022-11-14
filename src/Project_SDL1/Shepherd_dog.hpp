@@ -16,7 +16,7 @@ class Shepherd_dog : public Animal {
         * @param: size: size of the wolves array
         * @param: size_other: size of the other array
         */
-        void maj_position(Animal * animals,Animal * other, int _x, int _y);
+        void maj_position(Animal * animals,Animal * other, int _x, int _y,Shepherd * shepherd);
 };
 
 #endif  // SHEPHERD_DOG_HPP

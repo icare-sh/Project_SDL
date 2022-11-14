@@ -17,7 +17,7 @@ class Mouton : public Animal{
         * @param: size: size of the wolves array
         * @param: size_other: size of the other array
         */
-        void maj_position(Animal * wolves,Animal * other, int size, int size_other);
+        void maj_position(Animal * wolves,Animal * other, int size, int size_other,Shepherd * shepherd);
 
         /*
         * @brief: Find the nearest wolf

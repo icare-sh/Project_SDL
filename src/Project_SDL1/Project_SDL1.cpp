@@ -52,7 +52,7 @@ void render_copy_maj_pos(SDL_Renderer *renderer, SDL_Texture *texture, Animal * 
     {
         if(animals[i].get_alive() == true)
         {
-        animals[i].maj_position(animals,other,size,size_other);
+        animals[i].maj_position(animals,other,size,size_other,NULL);
         SDL_Rect SrcR = {0, 0, animals[i].get_shape_size(), animals[i].get_shape_size()};
         SDL_Rect DestR = { animals[i].get_x() , animals[i].get_y()  , animals[i].get_shape_size(), animals[i].get_shape_size()};
         SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
@@ -76,7 +76,7 @@ void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, An
         if(sheeps[i].get_alive() == true)
         {
         maj_timer(&sheeps[i],sheeps[i].get_time());
-        sheeps[i].maj_position(wolfs,sheeps,size_wolfs,size_sheeps);
+        sheeps[i].maj_position(wolfs,sheeps,size_wolfs,size_sheeps,NULL);
         SDL_Rect SrcR = {0, 0, sheeps[i].get_shape_size(), sheeps[i].get_shape_size()};
         SDL_Rect DestR = { sheeps[i].get_x() , sheeps[i].get_y()  , sheeps[i].get_shape_size(), sheeps[i].get_shape_size()};
         SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
@@ -90,23 +90,29 @@ void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, An
 }
 
 //Maj position of wolfs
-void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Animal * sheeps,Animal * dog, Animal *wolf, int size_sheeps, int size_dog, int size_wolf)
+void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Animal * sheeps,Animal * dog, Animal *wolf, int size_sheeps, int size_dog, int size_wolf,Shepherd * shepherd)
 {
+    //delete the sheep if alive == false
+
+    
     for (int i = 0; i < size_wolf; i++)
     {
-        check_if_time_is_over(&wolf[i]);
-
         if(wolf[i].get_alive() == true)
         {
-            maj_timer(&wolf[i]);
-            wolf[i].maj_position(sheeps,dog,size_sheeps,size_dog);
-            //dont_touch(wolf,size_wolf);
-            SDL_Rect SrcR = {0, 0, wolf[i].get_shape_size(), wolf[i].get_shape_size()};
-            SDL_Rect DestR = { wolf[i].get_x() , wolf[i].get_y()  , wolf[i].get_shape_size(), wolf[i].get_shape_size()};
-            SDL_RenderCopy(renderer, texture, &SrcR , &DestR);
-        } 
+        maj_timer(&wolf[i],wolf[i].get_time());
+        wolf[i].maj_position(sheeps,dog,size_sheeps,size_dog,shepherd);
+        SDL_Rect SrcR = {0, 0, wolf[i].get_shape_size(), wolf[i].get_shape_size()};
+        SDL_Rect DestR = { wolf[i].get_x() , wolf[i].get_y()  , wolf[i].get_shape_size(), wolf[i].get_shape_size()};
+        SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
+        }
+        else
+        {
+            wolf[i].~Animal();
+        }
     }
+
 }
+
 
 //Initiate one class Shepherd
 void render_copy_shepherd(SDL_Renderer *renderer, SDL_Texture *texture, Shepherd shepherd)
@@ -121,7 +127,7 @@ void render_copy_maj_pos_shepherd_dog(SDL_Renderer *renderer, SDL_Texture *textu
 {
     for (int i = 0; i < NB_SHEPHERD_DOG; i++)
     {
-        dog[i].maj_position(dog,other, x,y);
+        dog[i].maj_position(dog,other, x,y,NULL);
         SDL_Rect SrcR = {0, 0, dog[i].get_shape_size(), dog[i].get_shape_size()};
         SDL_Rect DestR = { dog[i].get_x() , dog[i].get_y()  , dog[i].get_shape_size(), dog[i].get_shape_size()};
         SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
@@ -214,7 +220,7 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         
         SDL_RenderCopy(renderer, texture[0], NULL, NULL); //Display background
         render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, interaction.get_nb_sheep(), NB_WOLF); //Display sheeps
-        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, interaction.get_nb_sheep(), NB_SHEPHERD_DOG, interaction.get_nb_wolves()); //Display wolves
+        render_copy_maj_pos_wolf(renderer, texture[2], sheeps, shepherd_dogs, wolves, interaction.get_nb_sheep(), NB_SHEPHERD_DOG, interaction.get_nb_wolves(),&shepherd); //Display wolves
         timer = increase_nb_wolves(&interaction, timer); //Increase nb wolves for more difficulty
 
         if (procreate(sheeps, interaction.get_nb_sheep()) == 1)
