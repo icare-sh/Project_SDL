@@ -17,7 +17,6 @@ Shepherd_dog::Shepherd_dog()
 }
 void Shepherd_dog::maj_position(Animal * animals,Animal * other, int _x, int _y,Shepherd * shepherd)
 {
-    printf("Maj pos \n");
     (void)other;
     float tmp_speed = 0.02;
     int random = rand() % 5;

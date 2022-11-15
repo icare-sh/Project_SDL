@@ -21,7 +21,7 @@ Mouton::Mouton()
         set_shape_size(80);
     }
     set_timer(TIME_TO_PROCREATE);
-    set_time(false);
+    set_time(true);
 }
 
 Animal * Mouton::nearest_wolf(Animal * wolfs, int size)

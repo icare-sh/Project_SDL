@@ -42,7 +42,7 @@ class Display : public Application {
         * Description: load image with the given parameters
         * return: a Texture
         */
-        SDL_Texture* load_image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Surface* surface, const char* path);
+        SDL_Texture* load_image(SDL_Renderer* renderer, const char* path);
 
     private:
         const char *path;
