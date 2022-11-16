@@ -240,9 +240,12 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         SDL_RenderPresent(renderer); //Update screen
         SDL_Delay(10); //FPS
 
+    
+
+
     }
 
-
+    
     
 
 
