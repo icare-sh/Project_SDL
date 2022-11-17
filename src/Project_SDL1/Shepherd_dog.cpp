@@ -99,3 +99,8 @@ bool Shepherd_dog::get_go_hunt() const
 {
     return this->is_go_hunt;
 }
+
+void Shepherd_dog::maj_timer()
+{
+    
+}

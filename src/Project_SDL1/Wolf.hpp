@@ -20,6 +20,7 @@ class Wolf : public Animal{
         */
         void maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, int size_shepherd_dogs,Shepherd * shepherd);
 
+        void maj_timer();
         /*
         * @brief: Find the nearest sheep
         *
@@ -53,12 +54,14 @@ class Wolf : public Animal{
         * @return: 1 if sheep is killed
         */
         int kill_sheep(Animal * sheep);
+
+        
 };
 
 /*
 * @brief: update timer
 */
-void maj_timer(Animal * wolves);
+
 
 /*
 * @brief: check if time to live over and set alive to false if time is over

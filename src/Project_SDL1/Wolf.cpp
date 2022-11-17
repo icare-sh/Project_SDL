@@ -143,9 +143,9 @@ void dont_touch(Animal * wolves, int size)
     }
 }
 
-void maj_timer(Animal * wolves)
+void Wolf::maj_timer()
 {
-    wolves->set_timer(wolves->get_timer() - 1);
+   this->set_timer(this->get_timer() - 1);
 }
 
 void check_if_time_is_over(Animal * wolve)

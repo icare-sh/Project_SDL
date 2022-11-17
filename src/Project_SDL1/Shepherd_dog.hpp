@@ -17,6 +17,7 @@ class Shepherd_dog : public Animal {
         * @param: size_other: size of the other array
         */
         void maj_position(Animal * animals,Animal * other, int _x, int _y,Shepherd * shepherd);
+        void maj_timer();
         Shepherd_dog * get_shepherd_dog_selection(Shepherd_dog * dogs, int x_pos_mouse ,int y_pos_mouse);
         //set and get is hunting
         void set_is_hunting(bool is_hunting);

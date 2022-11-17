@@ -51,8 +51,9 @@ void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, An
     {
         if(sheeps[i].get_alive() == true)
         {
-            maj_timer(&sheeps[i],sheeps[i].get_time());
-            sheeps[i].maj_position(wolfs,NULL,size_wolfs,NULL,NULL);
+         
+            sheeps[i].maj_timer();
+            sheeps[i].maj_position(wolfs,NULL,size_wolfs,0,NULL);
             if(sheeps[i].get_gender() == MALE)
             {
                 render_copy(renderer,texture,&sheeps[i]);
@@ -90,7 +91,8 @@ void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Anim
     {
         if(wolf[i].get_alive() == true)
         {
-        maj_timer(&wolf[i],wolf[i].get_time());
+        wolf[i].maj_timer();
+        //maj_timer(&wolf[i],wolf[i].get_time());
         wolf[i].maj_position(sheeps,dog,size_sheeps,size_dog,shepherd);
         render_copy(renderer,texture,&wolf[i]);
         }
@@ -240,14 +242,29 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         SDL_RenderPresent(renderer); //Update screen
         SDL_Delay(10); //FPS
 
-    
+        //loose
+        if(interaction.get_nb_sheep() <= 4)
+        {
+            SDL_RenderCopy(renderer, texture[7], NULL, NULL); //Display background
+            SDL_RenderPresent(renderer); //Update screen
+            shouldStop = SDL_TRUE;
+            SDL_Delay(5000);
+        }
+
+        //win
+        if(interaction.get_nb_wolves() <= 3)
+        {
+            SDL_RenderCopy(renderer, texture[8], NULL, NULL); //Display background
+            SDL_RenderPresent(renderer); //Update screen
+            shouldStop = SDL_TRUE;
+            SDL_Delay(5000);
+        }
 
 
     }
 
     
     
-
 
 
     delete[] sheeps; delete[] wolves; delete[] shepherd_dogs; delete[] shepherd_dog_selection;

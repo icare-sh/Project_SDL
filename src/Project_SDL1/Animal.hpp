@@ -6,7 +6,7 @@
 #include "Display.hpp"
 #include "Shepherd.hpp"
 #define TIME_TO_PROCREATE 1500
-#define TIME_TO_DIE 3000
+#define TIME_TO_DIE 800
 #define NB_SHEPHERD_DOG 3
 
 enum Gender {MALE, FEMALE};
@@ -124,6 +124,8 @@ class Animal : public Display{
         int get_x_hunt() const;
 
         int get_y_hunt() const;
+
+        virtual void maj_timer () = 0;
 
     private:
         int x;
