@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     SDL_Texture **texture = NULL; // Declare a list of texture
     SDL_Surface *surface = NULL; // Declare a surface
     Application app;
-    int nb_texture = 5; // Number of texture
+    int nb_texture = 9; // Number of texture
 
     texture = new SDL_Texture*[nb_texture];
     texture[0] = NULL; // Declare texture for background
@@ -22,6 +22,10 @@ int main(int argc, char* argv[])
     texture[2] = NULL; // Declare texture for wolves
     texture[3] = NULL; // Declare texture for shepherd
     texture[4] = NULL; // Declare texture for dogs
+    texture[5] = NULL; // Declare texture for sheep female
+    texture[6] = NULL; // Declare texture for sheep in love
+    texture[7] = NULL; // Declare texture for background win
+    texture[8] = NULL; // Declare texture for background loose
     
     
 
@@ -36,7 +40,7 @@ int main(int argc, char* argv[])
         //create window
         window = app.create_window("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, true);
         renderer = app.create_renderer(window);
-        init(window, renderer, texture, surface);
+        game(window, renderer, texture, surface);
     }
     
     app.SDL_close(window, nb_texture, texture, renderer);

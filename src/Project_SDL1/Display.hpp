@@ -11,7 +11,7 @@
 #define SCREEN_HEIGHT 1080 //screen height
 #define AURA_KILL 35 //aura of the wolf to kill the sheep
 #define SPEED_SHEEP 2 //speed of the sheep
-#define SPEED_WOLF 2 //speed of the wolf
+#define SPEED_WOLF 3 //speed of the wolf
 #define AURA_MOUTON 150 //aura of the wolf to follow the sheep
 #define AURA_WOLF 300 //aura of the wolf to run away from the shepherd dog
 #define ORBIT_SPEED 0.005f //speed of the shepherd dog

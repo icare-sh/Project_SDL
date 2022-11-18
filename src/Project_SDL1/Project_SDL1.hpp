@@ -13,8 +13,7 @@
 * Init game
 * Description: Init game with the given parameters
 */
-int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface);
-void render_copy_shepherd(SDL_Renderer *renderer, SDL_Texture *texture, Shepherd shepherd);
+int game(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface);
 Mouton * create_sheeps();
 Wolf * create_wolves();
 

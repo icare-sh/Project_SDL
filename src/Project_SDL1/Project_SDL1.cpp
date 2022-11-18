@@ -29,7 +29,7 @@ Shepherd_dog * create_shepherd_dog()
 }
 
 
-void render_copy(SDL_Renderer *renderer, SDL_Texture *texture, Animal * animals)
+static void render_copy(SDL_Renderer *renderer, SDL_Texture *texture, Animal * animals)
 {
     //Size of the texture
     SDL_Rect SrcR = {0, 0, animals->get_shape_size(), animals->get_shape_size()};
@@ -39,11 +39,8 @@ void render_copy(SDL_Renderer *renderer, SDL_Texture *texture, Animal * animals)
     SDL_RenderCopy(renderer, texture, &SrcR , &DestR); 
 }
 
-//Maj position of one class Animal
-
-
 //Maj position of sheeps
-void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, Animal * sheeps,Animal * wolfs, int size_sheeps, int size_wolfs,SDL_Texture *texture2,SDL_Texture *texture3)
+static void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, Animal * sheeps,Animal * wolfs, int size_sheeps, int size_wolfs,SDL_Texture *texture2,SDL_Texture *texture3)
 {
     //delete the sheep if alive == false
     
@@ -69,21 +66,16 @@ void render_copy_maj_pos_mouton(SDL_Renderer *renderer, SDL_Texture *texture, An
                 {
                     render_copy(renderer,texture3,&sheeps[i]);
                 }
-
-
-            }        
-        
+            }
         }
         else
-        {
             sheeps[i].~Animal();
-        }
     }
 
 }
 
 //Maj position of wolfs
-void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Animal * wolf,Animal * dog, Animal *sheeps, int size_wolf, int size_dog, int size_sheeps,Shepherd * shepherd)
+static void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Animal * wolf,Animal * dog, Animal *sheeps, int size_wolf, int size_dog, int size_sheeps,Shepherd * shepherd)
 {
     //delete the sheep if alive == false
     
@@ -92,7 +84,7 @@ void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Anim
         if(wolf[i].get_alive() == true)
         {
         wolf[i].maj_timer();
-        //maj_timer(&wolf[i],wolf[i].get_time());
+        check_if_time_is_over(&wolf[i]);
         wolf[i].maj_position(sheeps,dog,size_sheeps,size_dog,shepherd);
         render_copy(renderer,texture,&wolf[i]);
         }
@@ -106,7 +98,7 @@ void render_copy_maj_pos_wolf(SDL_Renderer *renderer, SDL_Texture *texture, Anim
 
 
 //Initiate one class Shepherd
-void render_copy_shepherd(SDL_Renderer *renderer, SDL_Texture *texture, Shepherd shepherd)
+static void render_copy_shepherd(SDL_Renderer *renderer, SDL_Texture *texture, Shepherd shepherd)
 {
     SDL_Rect SrcR = {0, 0, shepherd.get_shape_size(), shepherd.get_shape_size()};
     SDL_Rect DestR = { shepherd.get_x() , shepherd.get_y()  , shepherd.get_shape_size(), shepherd.get_shape_size()};
@@ -146,6 +138,25 @@ void get_shepherd_direction(SDL_Event event, Shepherd *shepherd)
     }
 }
 
+//get annimal alive
+bool are_animals_alive(Animal * animals, int size)
+{
+    int nb_animals_alive = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if(animals[i].get_alive() == true)
+        {
+            nb_animals_alive++;
+        }
+    }
+
+    if(nb_animals_alive == 0)
+        return false;
+    else
+        return true;
+}
+
+//increase the number of wolves
 int increase_nb_wolves(Interaction *interaction, int timer)
 {   
     if (interaction->get_nb_wolves() < NB_WOLF && timer == 700)
@@ -158,7 +169,7 @@ int increase_nb_wolves(Interaction *interaction, int timer)
 }
 
 //INIT GAME
-int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface) 
+int game(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface) 
 {
     //other definition
 
@@ -175,10 +186,10 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     texture[2] = display.load_image(renderer, "media/wolf1.bmp"); //Load wolf image
     texture[3] = display.load_image(renderer, "media/Berger.bmp"); //Load shepherd image
     texture[4] = display.load_image(renderer, "media/dog.bmp"); //Load shepherd dog image
-    texture[5] = display.load_image(renderer, "media/sheep_femme.bmp"); //Load shepherd dog image
-    texture[6] = display.load_image(renderer, "media/sheep_femme_amoureuse.bmp"); //Load shepherd dog image
-    texture[7] = display.load_image(renderer, "media/background_win.bmp"); //load background image
-    texture[8] = display.load_image(renderer, "media/background_loose.bmp"); //load background image
+    texture[5] = display.load_image(renderer, "media/sheep_femme.bmp"); //sheep female
+    texture[6] = display.load_image(renderer, "media/sheep_femme_amoureuse.bmp"); //sheep female in love
+    texture[7] = display.load_image(renderer, "media/background_loose.bmp"); //load background loose image
+    texture[8] = display.load_image(renderer, "media/background_win.bmp"); //load background win image
 
     Mouton * sheeps = create_sheeps(); //Create NB_SHEPP of sheeps & init position
     Wolf * wolves = create_wolves(); //Create NB_WOLF of wolves & init position
@@ -192,6 +203,17 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     while (!shouldStop) 
     {
         SDL_Event event;
+        //loose
+        if(are_animals_alive(sheeps, interaction.get_nb_sheep()) == false)
+        {
+            std::cout << "You loose" << std::endl;
+            render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, interaction.get_nb_sheep(), NB_WOLF,texture[5],texture[6]); //Display sheeps
+            SDL_RenderCopy(renderer, texture[7], NULL, NULL); //Display background
+            SDL_RenderPresent(renderer); //Update screen
+            SDL_Delay(5000);
+            shouldStop = SDL_TRUE;
+        }
+
         while (SDL_PollEvent(&event)) 
         {   
              switch (event.type) 
@@ -204,25 +226,19 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     if (event.button.button == SDL_BUTTON_LEFT)
-                    {
                         shepherd_dog_selection = shepherd_dogs->get_shepherd_dog_selection(shepherd_dogs, event.button.x, event.button.y);
-                    }
                     if(event.button.button == SDL_BUTTON_RIGHT)
                     {
                         if (shepherd_dog_selection != NULL)
                         {
-
                             shepherd_dog_selection->set_x_hunt(event.button.x);
                             shepherd_dog_selection->set_y_hunt(event.button.y);
                             shepherd_dog_selection->set_is_hunting(true);
                             shepherd_dog_selection->set_go_hunt(true);
                             shepherd_dog_selection = NULL;
-
                         }
                     }
-                    
                     break;
-                
                 default:
                     break;
              }
@@ -242,30 +258,22 @@ int init(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         SDL_RenderPresent(renderer); //Update screen
         SDL_Delay(10); //FPS
 
-        //loose
-        if(interaction.get_nb_sheep() <= 4)
-        {
-            SDL_RenderCopy(renderer, texture[7], NULL, NULL); //Display background
-            SDL_RenderPresent(renderer); //Update screen
-            shouldStop = SDL_TRUE;
-            SDL_Delay(5000);
-        }
+        
 
         //win
-        if(interaction.get_nb_wolves() <= 3)
+        if(are_animals_alive(wolves, interaction.get_nb_wolves()) == false)
         {
+            std::cout << "You win" << std::endl;
+            render_copy_maj_pos_wolf(renderer, texture[2], wolves , shepherd_dogs,sheeps ,interaction.get_nb_wolves() , NB_SHEPHERD_DOG,interaction.get_nb_sheep() ,&shepherd); //Display wolves
+            SDL_RenderPresent(renderer); //Update screen
             SDL_RenderCopy(renderer, texture[8], NULL, NULL); //Display background
             SDL_RenderPresent(renderer); //Update screen
-            shouldStop = SDL_TRUE;
             SDL_Delay(5000);
+            shouldStop = SDL_TRUE;
         }
 
 
     }
-
-    
-    
-
 
     delete[] sheeps; delete[] wolves; delete[] shepherd_dogs; delete[] shepherd_dog_selection;
 

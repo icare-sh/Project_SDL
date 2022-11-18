@@ -6,7 +6,7 @@
 #include "Display.hpp"
 #include "Shepherd.hpp"
 #define TIME_TO_PROCREATE 1500
-#define TIME_TO_DIE 800
+#define TIME_TO_DIE 1800
 #define NB_SHEPHERD_DOG 3
 
 enum Gender {MALE, FEMALE};
