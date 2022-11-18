@@ -106,7 +106,7 @@ static void render_copy_shepherd(SDL_Renderer *renderer, SDL_Texture *texture, S
 }
 
 //Maj position of shepherd dog
-void render_copy_maj_pos_shepherd_dog(SDL_Renderer *renderer, SDL_Texture *texture, Animal  * dog, int x, int y)
+static void render_copy_maj_pos_shepherd_dog(SDL_Renderer *renderer, SDL_Texture *texture, Animal  * dog, int x, int y)
 {
     for (int i = 0; i < NB_SHEPHERD_DOG; i++)
     {
@@ -169,11 +169,9 @@ int increase_nb_wolves(Interaction *interaction, int timer)
 }
 
 //INIT GAME
-int game(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface) 
+int game(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface, Interaction interaction) 
 {
     //other definition
-
-    Interaction interaction;
 
     srand (time (NULL)); //reset random
 
@@ -271,7 +269,6 @@ int game(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
             SDL_Delay(5000);
             shouldStop = SDL_TRUE;
         }
-
 
     }
 

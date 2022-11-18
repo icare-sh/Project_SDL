@@ -9,11 +9,22 @@
 
 int main(int argc, char* argv[])
 {  
+    if (argc != 3)
+    {
+        printf("Usage: %s <NB Sheeps> <NB Wolves>\n", argv[0]);
+        return 1;
+    }
+
     SDL_Window *window = NULL; // Declare a window
     SDL_Renderer *renderer = NULL; // Declare a renderer
     SDL_Texture **texture = NULL; // Declare a list of texture
     SDL_Surface *surface = NULL; // Declare a surface
     Application app;
+    Interaction interaction;
+
+    interaction.set_nb_sheep(atoi(argv[1]));
+    interaction.set_nb_wolves(atoi(argv[2]));
+
     int nb_texture = 9; // Number of texture
 
     texture = new SDL_Texture*[nb_texture];
@@ -40,7 +51,7 @@ int main(int argc, char* argv[])
         //create window
         window = app.create_window("SDL2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, true);
         renderer = app.create_renderer(window);
-        game(window, renderer, texture, surface);
+        game(window, renderer, texture, surface, interaction);
     }
     
     app.SDL_close(window, nb_texture, texture, renderer);
