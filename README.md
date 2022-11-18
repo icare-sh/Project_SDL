@@ -2,11 +2,12 @@
 This is a game in C++ using SDL library
 
 ## Build
-Create a build directory and run cmake from there
+Create a build directory and run cmake and make from there
 ```bash
     mkdir build
     cd build
     cmake ..
+    make
 ```
 ## Run
 ```bash
