@@ -1,5 +1,6 @@
 #include "Wolf.hpp"
 
+
 Wolf::Wolf()
 {
     set_x(rand()%SCREEN_WIDTH);
@@ -36,7 +37,7 @@ Animal * Wolf::nearest_sheep(Animal * sheeps, int size)
 }
 
 
-void Wolf::maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, int size_shepherd_dogs )
+void Wolf::maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, int size_shepherd_dogs,Shepherd * shepherd)
 {
     Animal * nearest = nearest_sheep(sheeps, size_sheeps);
     Animal * nearest_dogs = are_shepherd_dogs_near(shepherd_dogs, size_shepherd_dogs);
@@ -44,9 +45,10 @@ void Wolf::maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, 
     if(speed_up(nearest_dogs))
     {
 
+        
         float temp_taux = 0.1;
-        set_direction_x(nearest_dogs->get_x() + get_x());
-        set_direction_y(nearest_dogs->get_y() + get_y());
+        set_direction_x(-(shepherd->get_x() - get_x()));
+        set_direction_y(-(shepherd->get_y() - get_y()));
 
         temp_taux = sqrt(pow(get_direction_x(), 2) + pow(get_direction_y(), 2));
 
@@ -141,9 +143,9 @@ void dont_touch(Animal * wolves, int size)
     }
 }
 
-void maj_timer(Animal * wolves)
+void Wolf::maj_timer()
 {
-    wolves->set_timer(wolves->get_timer() - 1);
+   this->set_timer(this->get_timer() - 1);
 }
 
 void check_if_time_is_over(Animal * wolve)

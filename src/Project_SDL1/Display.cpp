@@ -31,10 +31,10 @@ SDL_Texture* Display::create_texture(SDL_Surface* surface, SDL_Renderer* rendere
     return texture; // return a texture object 
 }
 
-SDL_Texture* Display::load_image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Surface* surface, const char* path)
+SDL_Texture* Display::load_image(SDL_Renderer* renderer, const char* path)
 {
-    surface = load_surface(path);
-    texture = create_texture(surface, renderer);
+    SDL_Surface* surface = load_surface(path);
+    SDL_Texture* texture = create_texture(surface, renderer);
     SDL_FreeSurface(surface);
     return texture;
 }

@@ -17,8 +17,10 @@ class Mouton : public Animal{
         * @param: size: size of the wolves array
         * @param: size_other: size of the other array
         */
-        void maj_position(Animal * wolves,Animal * other, int size, int size_other);
+        void maj_position(Animal * wolves,Animal * other, int size, int size_other,Shepherd * shepherd);
 
+
+        void maj_timer();
         /*
         * @brief: Find the nearest wolf
         *
@@ -50,6 +52,4 @@ int procreate(Animal * moutons, int size);
 /*
 * @brief: update timer to make mouton pregnant
 */
-int maj_timer(Animal * mouton, bool time);
-
 #endif // MOUTON_HPP

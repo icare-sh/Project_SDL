@@ -21,7 +21,7 @@ Mouton::Mouton()
         set_shape_size(80);
     }
     set_timer(TIME_TO_PROCREATE);
-    set_time(false);
+    set_time(true);
 }
 
 Animal * Mouton::nearest_wolf(Animal * wolfs, int size)
@@ -63,7 +63,7 @@ int Mouton::speed_up(Animal * wolf)
     }
 }
 
-void Mouton::maj_position(Animal * wolves,Animal * other,int size, int size_other)
+void Mouton::maj_position(Animal * wolves,Animal * other,int size, int size_other,Shepherd * shepherd)
 {
 
     (void) other;
@@ -130,17 +130,15 @@ int procreate(Animal * moutons, int size)
 }
 
 
-int maj_timer(Animal * mouton, bool time)
+void Mouton::maj_timer()
 {
-    if (time)
+    if (this->get_time())
     {
-        mouton->set_timer(mouton->get_timer() - 1);
-        if (mouton->get_timer() == 0)
+        this->set_timer(this->get_timer() - 1);
+        if (this->get_timer() == 0)
         {
-            mouton->set_time(false);
-            mouton->set_timer(TIME_TO_PROCREATE);
-            return 1;
+            this->set_time(false);
+            this->set_timer(TIME_TO_PROCREATE);
         }
     }
-    return 0;
 }

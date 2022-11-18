@@ -6,7 +6,6 @@
 #include <vector>
 
 
-
 class Wolf : public Animal{
     public:
         Wolf();
@@ -19,8 +18,9 @@ class Wolf : public Animal{
         * @param: size: size of the array animals
         * @param: size_other: size of the array other
         */
-        void maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, int size_shepherd_dogs );
+        void maj_position(Animal * sheeps,Animal *shepherd_dogs, int size_sheeps, int size_shepherd_dogs,Shepherd * shepherd);
 
+        void maj_timer();
         /*
         * @brief: Find the nearest sheep
         *
@@ -54,12 +54,14 @@ class Wolf : public Animal{
         * @return: 1 if sheep is killed
         */
         int kill_sheep(Animal * sheep);
+
+        
 };
 
 /*
 * @brief: update timer
 */
-void maj_timer(Animal * wolves);
+
 
 /*
 * @brief: check if time to live over and set alive to false if time is over

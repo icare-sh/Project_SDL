@@ -4,9 +4,10 @@
 #include <iostream>
 #include <math.h>
 #include "Display.hpp"
-
+#include "Shepherd.hpp"
 #define TIME_TO_PROCREATE 1500
-#define TIME_TO_DIE 3000
+#define TIME_TO_DIE 1800
+#define NB_SHEPHERD_DOG 3
 
 enum Gender {MALE, FEMALE};
 
@@ -97,7 +98,7 @@ class Animal : public Display{
         /*
         * @brief: an abstract function to update the position of the animal
         */
-        virtual void maj_position(Animal * animals,Animal * other, int size_animals, int size_other ) = 0;
+        virtual void maj_position(Animal * animals,Animal * other, int size_animals, int size_other,Shepherd * shepherd) = 0;
 
         /*
         * @brief: set the gender
@@ -116,6 +117,16 @@ class Animal : public Display{
 
         bool get_time() const;
 
+        void set_x_hunt(int x);
+
+        void set_y_hunt(int y);
+
+        int get_x_hunt() const;
+
+        int get_y_hunt() const;
+
+        virtual void maj_timer () = 0;
+
     private:
         int x;
         int y;
@@ -128,6 +139,8 @@ class Animal : public Display{
         Gender g;
         int timer;
         bool time; // a bool to know if the animal is in the process of procreating(for sheeps) or dying (for wolves)
+        int x_hunt;
+        int y_hunt;
 };
 
 #endif // ANIMAL_HPP
