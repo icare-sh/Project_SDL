@@ -150,23 +150,12 @@ bool are_animals_alive(Animal * animals, int size)
         }
     }
 
-    if(nb_animals_alive == 0)
+    if(nb_animals_alive == 1 || nb_animals_alive == 0)
         return false;
     else
         return true;
 }
 
-//increase the number of wolves
-int increase_nb_wolves(Interaction *interaction, int timer)
-{   
-    if (interaction->get_nb_wolves() < NB_WOLF && timer == 700)
-    {
-        interaction->set_nb_wolves(interaction->get_nb_wolves() + 1);
-        timer = 0;
-        return timer;
-    }
-    return timer + 1;
-}
 
 //INIT GAME
 int game(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_Surface *surface, Interaction interaction) 
@@ -195,9 +184,6 @@ int game(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
     Shepherd_dog * shepherd_dog_selection = new Shepherd_dog();
     auto shepherd = Shepherd(); //Call shepherd class
 
-    //timer of the game
-    int timer = 0;
-    
     while (!shouldStop) 
     {
         SDL_Event event;
@@ -245,7 +231,6 @@ int game(SDL_Window *window, SDL_Renderer *renderer, SDL_Texture **texture, SDL_
         SDL_RenderCopy(renderer, texture[0], NULL, NULL); //Display background
         render_copy_maj_pos_mouton(renderer, texture[1], sheeps, wolves, interaction.get_nb_sheep(), NB_WOLF,texture[5],texture[6]); //Display sheeps
         render_copy_maj_pos_wolf(renderer, texture[2], wolves , shepherd_dogs,sheeps ,interaction.get_nb_wolves() , NB_SHEPHERD_DOG,interaction.get_nb_sheep() ,&shepherd); //Display wolves
-        timer = increase_nb_wolves(&interaction, timer); //Increase nb wolves for more difficulty
         render_copy_maj_pos_shepherd_dog(renderer, texture[4], shepherd_dogs, shepherd.get_x(), shepherd.get_y()); //Display shepherd dog
         
         render_copy_shepherd(renderer, texture[3], shepherd); //Display shepherd
