@@ -45,7 +45,7 @@ We have two types of sheeps:
     
 
 * The shepherd dogs move circles around the shepherd, you can control them by left clicking on the screen to select one of them and right clicking in the screen to move them to the selected position.  
-<img src="/src/media/dog.png" >  
+<img src="/src/media/dog1.bmp" >  
     
   
 The game ends when keep 1 sheeps alives or when the wolves are all dead.
