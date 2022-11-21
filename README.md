@@ -4,7 +4,7 @@ This is a game in C++ using SDL library
 insert image in te readme.md file in github repository using markdown syntax as follows: 
     
 
-<img src="/asset/background.png" alt="Employee data" title="Employee Data title">
+<img src="/asset/background.png">
 
 
 
@@ -31,9 +31,13 @@ You have to set the number of sheeps and wolves you want to play with.
 We have two types of sheeps:  
     * The men sheep:  
     <img src="/src/media/sheep1.bmp" >  
+
+
     * The women sheep:  
     <img src="/src/media/sheep_femme.bmp" >  
-    * The women have a special hability,when they are in time of fecondity, they can have babies with men sheep.
+
+
+    * The women have a special hability,when they are in time of fecondity, they can have babies with men sheep.  
     <img src="/src/media/sheep_femme_amoureuse.bmp" >  
 
 * You can control the shepherd with the q, d, z, s keys.  
@@ -41,7 +45,7 @@ We have two types of sheeps:
     
 
 * The shepherd dogs move circles around the shepherd, you can control them by left clicking on the screen to select one of them and right clicking in the screen to move them to the selected position.  
-<img src="/src/media/dog.png" alt="Employee data" title="Employee Data title">  
+<img src="/src/media/dog.png" >  
     
   
-The game ends when all the sheeps are eaten or when the wolves are all dead.
+The game ends when keep 1 sheeps alives or when the wolves are all dead.
