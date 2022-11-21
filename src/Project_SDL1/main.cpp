@@ -11,7 +11,13 @@ int main(int argc, char* argv[])
 {  
     if (argc != 3)
     {
-        printf("Usage: %s <NB Sheeps> <NB Wolves>\n", argv[0]);
+        std::cout << "Usage: " << argv[0] << "<nb sheep> <nb _wolves>" << std::endl;
+        return 1;
+    }
+
+    if (atoi(argv[1]) <= 1 || atoi(argv[2]) <= 1)
+    {
+        std::cout << "Nb sheep et Nb wolves doivent être superieur ou égale à 2 " << std::endl;
         return 1;
     }
 
