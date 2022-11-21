@@ -32,9 +32,9 @@ We have two types of sheeps:
     * The men sheep:  
     <img src="/src/media/sheep1.bmp" >  
     * The women sheep:  
-    <img src="/src/media/sheep_femme_amoureuse.bmp" >  
+    <img src="/src/media/sheep_femme.bmp" >  
     * The women have a special hability,when they are in time of fecondity, they can have babies with men sheep.
-    <img src="/src/media/sheep_women_pregnant.png" >  
+    <img src="/src/media/sheep_femme_amoureuse.bmp" >  
 
 * You can control the shepherd with the q, d, z, s keys.  
 <img src="/src/media/Berger.bmp" >  
