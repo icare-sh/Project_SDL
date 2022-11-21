@@ -3,8 +3,8 @@ This is a game in C++ using SDL library
 
 insert image in te readme.md file in github repository using markdown syntax as follows: 
     
-![Alt text(asset/background.png?raw=true "Optional Title")]
 
+<img src="/asset/background.png" alt="Employee data" title="Employee Data title">
 
 
 
