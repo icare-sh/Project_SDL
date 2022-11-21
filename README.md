@@ -29,12 +29,10 @@ You have to set the number of sheeps and wolves you want to play with.
 
 * The sheeps are controlled by the computer also and will try to escape the wolves.  
 We have two types of sheeps:  
-    * The men sheep:  
-    <img src="/src/media/sheep1.bmp" >  
+    * The men sheep: <img src="/src/media/sheep1.bmp" >  
 
 
-    * The women sheep:  
-    <img src="/src/media/sheep_femme.bmp" >  
+    * The women sheep: <img src="/src/media/sheep_femme.bmp" >  
 
 
     * The women have a special hability,when they are in time of fecondity, they can have babies with men sheep.  
