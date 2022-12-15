@@ -48,4 +48,11 @@ We have two types of sheeps:
 <img src="/src/media/dog.bmp" >  
     
   
-The game ends when keep 1 sheeps alives or when the wolves are all dead.
+The game ends when keep 1 sheeps alives or when the wolves are all dead.  
+
+## Contributors
+
+- [Agustin Bouchon](https://github.com/Joadza)
+- [Sabir Mohamed Ben Ali](https://github.com/icare-sh)
+- [Anthony Becuwe](https://github.com/Super-huit)
+- [Remi Tang](https://github.com/remitang)
